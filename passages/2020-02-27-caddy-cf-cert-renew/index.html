@@ -174,7 +174,8 @@
   </h1>
   
   <article class="passage-article">
-    <p><em>使用233boy腳本一鍵搭建的人(我也是)注意，由於第一次配置時尚末安裝caddy插件，因此第一次配置時仍要點灰雲朵，之後使用插件就不用再手動操作續簽了。</em>    </p>
+    <p>在配置v2ray三件套(ws+tls+web)的時候，如果使用了Cloudflare CDN，配置時要先把CF的雲朵點灰（不經過CDN）才能讓Caddy解析到服務器地址並取得證書。透過Caddy插件<code>tls.dns.cloudflare</code>，可以讓域名在套上CDN的情況下仍能成功續簽SSL憑証。</p>
+<p><em>使用233boy腳本一鍵搭建的人(我也是)注意，由於第一次配置時尚末安裝caddy插件，因此第一次配置時仍要點灰雲朵，之後使用插件就不用再手動操作續簽了。</em>    </p>
 <ol>
 <li>安裝<code>tls.dns.cloudflare</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line">curl https://getcaddy.com | bash -s personal tls.dns.cloudflare</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure></li>
 <li>修改Caddy配置文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/caddy/Caddyfile</span><br></pre></td></tr></table></figure>
