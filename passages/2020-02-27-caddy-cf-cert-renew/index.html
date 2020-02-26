@@ -6,16 +6,16 @@
   <meta name="author" content="Pohao Henry Linhuang" />
   
   
-  <title>归档: 2020/2 | Paper Hub</title>
+  <title>利用Cloudflare API讓Caddy自動續簽SSL證書 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="vpn,vps,v2ary,cloudflare,CDN,caddy,DNS," />
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="在配置v2ray三件套(ws+tls+web)的時候，如果使用了Cloudflare CDN，配置時要先把CF的雲朵點灰（不經過CDN）才能讓Caddy解析到服務器地址並取得證書。透過Caddy插件tls.dns.cloudflare，可以讓域名在套上CDN的情況下仍能成功續簽SSL憑証。">
 
   
 
@@ -42,7 +42,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Pohao Henry Linhuang",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -156,55 +156,92 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 7篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-02-27
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    利用Cloudflare API讓Caddy自動續簽SSL證書
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-caddy-cf-cert-renew/">利用Cloudflare API讓Caddy自動續簽SSL證書</a>
-    </div>
+  <article class="passage-article">
+    <p><em>使用233boy腳本一鍵搭建的人(我也是)注意，由於第一次配置時尚末安裝caddy插件，因此第一次配置時仍要點灰雲朵，之後使用插件就不用再手動操作續簽了。</em>    </p>
+<ol>
+<li>安裝<code>tls.dns.cloudflare</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line">curl https://getcaddy.com | bash -s personal tls.dns.cloudflare</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure></li>
+<li>修改Caddy配置文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/caddy/Caddyfile</span><br></pre></td></tr></table></figure>
+增加以下內容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">your_domain.net &#123;</span><br><span class="line">    ...</span><br><span class="line">    tls email@example.com</span><br><span class="line"></span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>修改<code>/etc/systemd/system/multi-user.target.wants/caddy.service</code>中的環境變量，在<code>[Service]</code>下方加上自己的Cloudflare帳號與<strong>Cloudflare Global API Key</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/systemd/system/multi-user.target.wants/caddy.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Environment</span>=<span class="string">CLOUDFLARE_EMAIL=you_email@example.com</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">CLOUDFLARE_API_KEY=123456abcd123sadfs345sdge4t5fdsg34</span></span><br></pre></td></tr></table></figure></li>
+<li>重啟caddy服務<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo service caddy restart</span><br></pre></td></tr></table></figure></li>
+<li>檢查caddy是否正常運作<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status caddy</span><br></pre></td></tr></table></figure>
+出現<strong>Active(Running)</strong>代表沒問題。    </li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[<a href="https://www.cylindric.net/web/caddyserver-and-cloudflare]" target="_blank" rel="noopener">https://www.cylindric.net/web/caddyserver-and-cloudflare]</a></p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-about-images/">關於圖片</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-27-caddy-cf-cert-renew/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-oversea-chinese-graduate/">港澳台学生申请大陆研究所管道分享（2019）</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/vpn/"><i class="fa fa-tags"></i>vpn</a>
+     
+      <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/v2ary/"><i class="fa fa-tags"></i>v2ary</a>
+     
+      <a href="/tags/cloudflare/"><i class="fa fa-tags"></i>cloudflare</a>
+     
+      <a href="/tags/CDN/"><i class="fa fa-tags"></i>CDN</a>
+     
+      <a href="/tags/caddy/"><i class="fa fa-tags"></i>caddy</a>
+     
+      <a href="/tags/DNS/"><i class="fa fa-tags"></i>DNS</a>
     
-    <div class="timeline-item">
-      <time>2020-02-26</time>
-      <a target="_self" href="/passages/2020-02-26-v2ray-resource/">架設v2Ray實用腳本與資源鏈接</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-26</time>
-      <a target="_self" href="/passages/2020-02-26-wsl-install-change-source-md/">WSL2安裝Debian(Ubuntu)並更換國內apt源</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-26</time>
-      <a target="_self" href="/passages/2020-02-26-created-site-md/">創站</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-26</time>
-      <a target="_self" href="/passages/hello-world/">Hello World</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -256,16 +293,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2020-02-27-about-images/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
