@@ -20,11 +20,15 @@
   
 
   
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
 
   
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
   
 
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
   
 
   
@@ -34,7 +38,7 @@
   // it can be used in every script
   
   window.AD_CONFIG = {
-    leancloud: {"appid":"Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz","appkey":"WaR7nrzhliHj9aVwdQzkdlGd","comment":false,"count":false},
+    leancloud: {"appid":"13vc7SSrDX0ulA5s5njKbRg6-MdYXbMMI","appkey":"BcReDEPMaWVEYun7pVJCCioe","comment":true,"count":true},
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
@@ -203,6 +207,10 @@
       <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
     </div>
     
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
     
       <div class="site-footer-info">
         <i class="fa fa-at"></i> Email: admin[AT]phlinhng.com
@@ -268,6 +276,10 @@
     <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
+    
+      <a href="javascript:void(0);" data-enable="false">
+        <i class="fa fa-commenting"></i>
+      </a>
     
     <a href="javascript:void(0);" id="site-toggle-share-btn">
       <i class="fa fa-share-alt"></i>
