@@ -6,16 +6,16 @@
   <meta name="author" content="Pohao Henry Linhuang" />
   
   
-  <title>創站 | PH Lin&#39;s site</title>
+  <title>WSL2安裝Debian(Ubuntu) | PH Lin&#39;s site</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="wsl,ubuntu,debian," />
   
 
   
-  <meta name="description" content="其實從2019年開始一直有自己建blog的念頭，因為那時候發現大陸厲害的程序員都喜歡自己架站，不過那時候寫代碼的功力還很菜就一直懶得弄。    ">
+  <meta name="description" content="從我本科學編程以來一直用的mac，配環境都用homebrew，省心到都不曉得外面的世界多險惡。最近得到一台windows，需要在上面配置開發環境，把過程記錄下來免得下次重裝機時忘了。">
 
   
 
@@ -178,13 +178,34 @@
     
   </div>
   <h1 class="passage-title">
-    創站
+    WSL2安裝Debian(Ubuntu)
   </h1>
   
   <article class="passage-article">
-    <p>就在上個月（2020年1月）中，我用了3年的知乎帳號被無預警停用了，200多篇收藏、不知道多少回答和5篇專欄文章隨之消失，這時才了解到為什麼大陸程序員要自己建博客。雖然內容大部分是寫給自己看的備忘錄，好歹也是我的勞動成果啊！    </p>
-<p>架構採用很流行的<strong>Hexo + Github Pages + 自訂域名</strong>的方式，雖然國內訪問github比較慢但至少不會被牆，以保存筆記的用途來說應該夠用了。主題是<a href="https://github.com/dongyuanxin" target="_blank" rel="noopener">github/dongyuanxin</a>大佬寫的Art Design主題<a href="https://github.com/dongyuanxin/theme-ad" target="_blank" rel="noopener">theme-ad</a>。    </p>
-<p>創站日期是2020-02-26，設定成2020-02-20只是看著順眼。</p>
+    <h1 id="一、安裝WSL和Debian並切換至WSL2"><a href="#一、安裝WSL和Debian並切換至WSL2" class="headerlink" title="一、安裝WSL和Debian並切換至WSL2"></a>一、安裝WSL和Debian並切換至WSL2</h1><ol>
+<li>在”启用或关闭Windows功能”中启用以下两个选项：Windows虚拟机平台、适用于Linux的Windows子系统。</li>
+<li>在Windows应用商店中选择需要安装的Linux发行版。（我選Debian）</li>
+<li>打開Debian，完成安裝。（這步很多教程沒有強調，是<strong>先安裝Linux再轉換WSL2</strong>）</li>
+<li>在PowerShell中运行以下指令，將WSL1轉換成WSL2</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-version &lt;Distro&gt; 2</span><br><span class="line">wsl —set-default-version 2</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、切換Debian的apt-get至國內源"><a href="#二、切換Debian的apt-get至國內源" class="headerlink" title="二、切換Debian的apt-get至國內源"></a>二、切換Debian的apt-get至國內源</h1><ol>
+<li>用預設源做sudo apt-get update（<strong>不能一開始就換源！</strong>否則換源後需要的ca-certificates組件沒辦法裝）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></li>
+<li>安裝ca-certificates，Debian Buster(10) 版開始己經不需要apt-transport-https<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ca-certificates</span><br></pre></td></tr></table></figure></li>
+<li>打開內建的vim，編輯/etc/apt/sources.list<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/apt/sources.list</span><br></pre></td></tr></table></figure></li>
+<li>將以下內容取代原本的，記得先備份（[trusted=yes]很重要）。內建的vim有bug，Insert模式下按方向鍵會輸出ABCD，所以正確姿勢是<strong>按dd清除每一行，按i進入insert，按右鍵黏貼，按esc退出insert，:wq保存後離開。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">deb [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster main contrib non-free</span><br><span class="line"># deb-src [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster main contrib non-free</span><br><span class="line">deb [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster-updates main contrib non-free</span><br><span class="line">#deb-src [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster-updates main contrib non-free</span><br><span class="line">deb [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster-backports main contrib non-free</span><br><span class="line"># deb-src [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian&#x2F; buster-backports main contrib non-free</span><br><span class="line">deb [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian-security buster&#x2F;updates main contrib non-free</span><br><span class="line"># deb-src [trusted&#x3D;yes] https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;debian-security buster&#x2F;updates main contrib non-free</span><br></pre></td></tr></table></figure></li>
+<li>幹掉坑爹內建vim，換成完整版，測試一下換源是否成功。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get remove vim-common</span><br><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="三、Shell從bash換成zsh"><a href="#三、Shell從bash換成zsh" class="headerlink" title="三、Shell從bash換成zsh"></a>三、Shell從bash換成zsh</h1><p>最難的換源己經結束，再來要把預設shell換成用習慣的zsh + oh-my-zsh，找篇ubuntu安裝zsh的教學照做即可。（debian換shell方式同ubuntu）<br><a href="https://www.cnblogs.com/EasonJim/p/7863099.html" target="_blank" rel="noopener">Ubuntu 16.04下安装zsh和oh-my-zsh</a></p>
+<h1 id="四、安裝pyenv和Python3"><a href="#四、安裝pyenv和Python3" class="headerlink" title="四、安裝pyenv和Python3"></a>四、安裝pyenv和Python3</h1><p>同樣找篇教學照做即可，如果己經換了shell，要在<del>/.zshrc更新pyenv的PATH而不是</del>/.bashrc。<br><a href="https://blog.csdn.net/wanyu_lss/article/details/81138268" target="_blank" rel="noopener">Ubuntu安装Pyenv,Python,Virtualenv</a></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>還是homebrew好。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/73552473" target="_blank" rel="noopener">微软更新Linux子系统，编译WSL 2内核只需3步</a></li>
+<li>(<a href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/help/debian/</a>)</li>
+</ul>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -192,7 +213,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、安裝WSL和Debian並切換至WSL2"><span class="toc-text">一、安裝WSL和Debian並切換至WSL2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、切換Debian的apt-get至國內源"><span class="toc-text">二、切換Debian的apt-get至國內源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Shell從bash換成zsh"><span class="toc-text">三、Shell從bash換成zsh</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、安裝pyenv和Python3"><span class="toc-text">四、安裝pyenv和Python3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#總結"><span class="toc-text">總結</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
   </div>
 </aside>
   
@@ -201,7 +222,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-26-created-site-md/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-26-wsl-install-change-source-md/</a>
         </div>
       
       <div>
@@ -209,6 +230,16 @@
       </div>
     </aside>
   
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/wsl/"><i class="fa fa-tags"></i>wsl</a>
+     
+      <a href="/tags/ubuntu/"><i class="fa fa-tags"></i>ubuntu</a>
+     
+      <a href="/tags/debian/"><i class="fa fa-tags"></i>debian</a>
+    
+    </div>
   
 </div>
 
@@ -289,10 +320,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-02-26-wsl-install-change-source-md/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/hello-world/" data-enable="true">
+    <a href="/passages/2020-02-26-created-site-md/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
