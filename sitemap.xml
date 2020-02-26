@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.phlinhng.com/passages/2020-02-20-hello-world/</loc>
+    
+    <lastmod>2020-02-26T22:04:23.240Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.phlinhng.com/passages/2020-02-27-caddy-cf-cert-renew/</loc>
     
     <lastmod>2020-02-26T18:27:29.982Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://www.phlinhng.com/passages/2020-02-26-wsl-install-change-source-md/</loc>
     
     <lastmod>2020-02-26T16:24:45.965Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.phlinhng.com/passages/hello-world/</loc>
-    
-    <lastmod>2020-02-26T13:08:58.277Z</lastmod>
     
   </url>
   
