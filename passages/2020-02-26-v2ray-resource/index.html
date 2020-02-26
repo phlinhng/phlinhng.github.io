@@ -6,16 +6,16 @@
   <meta name="author" content="Pohao Henry Linhuang" />
   
   
-  <title>Hello World | PH Lin&#39;s site</title>
+  <title>架設v2Ray實用腳本與資源鏈接 | PH Lin&#39;s site</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="hexo," />
+    <meta name="keywords" content="v2ray,vpn,vps,proxy," />
   
 
   
-  <meta name="description" content="主要">
+  <meta name="description" content="蒐集自架v2ray代理會用到的腳本與鏈接。">
 
   
 
@@ -170,24 +170,44 @@
     
   </div>
   <h1 class="passage-title">
-    Hello World
+    架設v2Ray實用腳本與資源鏈接
   </h1>
   
   <article class="passage-article">
-    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+    <p>本文工具仅做为网络技术学习之用，请自觉遵守国家相关法律规定，勿将代理工具用于科研、学习、娱乐以外之任何非法用途。</p>
+<h1 id="v2ray-amp-trojan"><a href="#v2ray-amp-trojan" class="headerlink" title="v2ray &amp; trojan"></a>v2ray &amp; trojan</h1><h2 id="v2ray-scripts"><a href="#v2ray-scripts" class="headerlink" title="v2ray scripts"></a>v2ray scripts</h2><p>v2ray官方腳本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -L -s https://install.direct/go.sh)</span><br></pre></td></tr></table></figure>
+<p>v2ray 233v2一鍵腳本 by <a href="https://github.com/233boy/v2ray" target="_blank" rel="noopener">233boy</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -s -L https://git.io/v2ray.sh)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="trojan-scripts"><a href="#trojan-scripts" class="headerlink" title="trojan scripts"></a>trojan scripts</h2><p>trojan 一鍵腳本 by <a href="https://github.com/atrandys/trojan" target="_blank" rel="noopener">atrandys</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -s -L https://github.com/V2RaySSR/Trojan/raw/master/Trojan.sh)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h2 id="TCP擁塞控制算法內核-BBR-BBRplus-BBR魔改-銳速"><a href="#TCP擁塞控制算法內核-BBR-BBRplus-BBR魔改-銳速" class="headerlink" title="TCP擁塞控制算法內核 (BBR/BBRplus/BBR魔改/銳速)"></a>TCP擁塞控制算法內核 (BBR/BBRplus/BBR魔改/銳速)</h2><p>加速内核安装 4 in 1 一鍵腳本 by <a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">chiakge</a><br>經測試在Debian 9系統上開啟效果最佳，於Ubuntu上安裝可能導致VPS無法開機。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate <span class="string">"https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"</span> &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>開啟原版BBR by <a href="https://github.com/teddysun" target="_blank" rel="noopener">teddysun</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh &amp;&amp; ./bbr.sh</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>檢查擁塞控制算法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
 
+<h1 id="linux-相關"><a href="#linux-相關" class="headerlink" title="linux 相關"></a>linux 相關</h1><p>安裝寶塔面板</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O install.sh http:&#x2F;&#x2F;download.bt.cn&#x2F;install&#x2F;install-ubuntu_6.0.sh &amp;&amp; sudo bash install.sh</span><br></pre></td></tr></table></figure>
+
+<p>樹莓派安裝nginx in BT Panel (<a href="https://www.mzxh.xyz/2019/12/26/64%E4%BD%8Dubuntu%E5%AE%98%E6%96%B9%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E5%AE%9D%E5%A1%947.0.3%20%E5%B9%B6%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85nginx+php+mysql%E7%8E%AF%E5%A2%83/" target="_blank" rel="noopener">source</a>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgd-dev</span><br><span class="line">wget https://www.mzxh.xyz/tools/nginx.sh</span><br></pre></td></tr></table></figure>
+
+<p>修改ssh port</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<h1 id="links"><a href="#links" class="headerlink" title="links"></a>links</h1><p><a href="https://www.v2ray.com/index.html" target="_blank" rel="noopener">https://www.v2ray.com/index.html</a></p>
+<h1 id="VPS-推薦"><a href="#VPS-推薦" class="headerlink" title="VPS 推薦"></a>VPS 推薦</h1><ul>
+<li>Google Cloud Platform</li>
+<li>Banwagon</li>
+<li>Dmit</li>
+<li>Amazon Web Services</li>
+</ul>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -195,7 +215,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#v2ray-amp-trojan"><span class="toc-text">v2ray &amp; trojan</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#v2ray-scripts"><span class="toc-text">v2ray scripts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trojan-scripts"><span class="toc-text">trojan scripts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP擁塞控制算法內核-BBR-BBRplus-BBR魔改-銳速"><span class="toc-text">TCP擁塞控制算法內核 (BBR&#x2F;BBRplus&#x2F;BBR魔改&#x2F;銳速)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-相關"><span class="toc-text">linux 相關</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#links"><span class="toc-text">links</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VPS-推薦"><span class="toc-text">VPS 推薦</span></a></li></ol>
   </div>
 </aside>
   
@@ -204,7 +224,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/hello-world/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-26-v2ray-resource/</a>
         </div>
       
       <div>
@@ -215,7 +235,13 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/hexo/"><i class="fa fa-tags"></i>hexo</a>
+      <a href="/tags/v2ray/"><i class="fa fa-tags"></i>v2ray</a>
+     
+      <a href="/tags/vpn/"><i class="fa fa-tags"></i>vpn</a>
+     
+      <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/proxy/"><i class="fa fa-tags"></i>proxy</a>
     
     </div>
   
@@ -280,10 +306,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-02-26-created-site-md/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2020-02-26-wsl-install-change-source-md/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
