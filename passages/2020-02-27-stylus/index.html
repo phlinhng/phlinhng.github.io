@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="yQmYVCzuIkO-w6cPq-lU8GFEEcSDwqHfRmFIB9lTkTg" />
+  <meta name="author" content="phlinhng" />
+  
+  
+  <title>利用Stylus插件讓Chrome有macOS般的字體渲染效果 | Paper Hub</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="google chrome,stylish,stylus,font," />
+  
+
+  
+  <meta name="description" content="Stylish是一個讓你可以在每個網站自訂CSS的工具，我們可以利用CSS達成類似Mac的字體渲染效果。">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"13vc7SSrDX0ulA5s5njKbRg6-MdYXbMMI","appkey":"BcReDEPMaWVEYun7pVJCCioe","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2020-02-20",
+    passwords: [],
+    is_post: true,
+    lock: false,
+    author: "phlinhng",
+    share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  
+<script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+
+  
+    <link rel="icon" href="/images/cloudy.png">
+    <link rel="apple-touch-icon" href="/images/cloudy.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">PAPER HUB</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 無欲則剛</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首頁</a>
+      
+        <a href="/archives/" target="_self">歸檔</a>
+      
+        <a href="/tags/" target="_self">標籤</a>
+      
+        <a href="/categories/" target="_self">分類</a>
+      
+        <a href="/about/" target="_self">關於</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/phlinhng/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>導航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首頁
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            歸檔
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            標籤
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分類
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            關於
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-02-27
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    利用Stylus插件讓Chrome有macOS般的字體渲染效果
+  </h1>
+  
+    <div class="passage-cover">
+      <figure style="background-image:url(https://res.cloudinary.com/phlincloud/image/upload/v1582770069/images/2020-02-27-stylus/dqbbieoy5dsw1k2g1azw.jpg);"></figure>
+    </div>
+  
+  <article class="passage-article">
+    <p>Stylish是一個讓你可以在每個網站自訂CSS的工具，我們可以利用CSS達成類似Mac的字體渲染效果。</p>
+<h1 id="安装所需字体和Stylus插件"><a href="#安装所需字体和Stylus插件" class="headerlink" title="安装所需字体和Stylus插件"></a>安装所需字体和Stylus插件</h1><ul>
+<li><p><a href="https://github.com/adobe-fonts/source-han-sans" target="_blank" rel="noopener">思源黑体</a> <a href="https://github.com/adobe-fonts/source-han-sans/raw/release/OTF/SourceHanSansSC.zip" target="_blank" rel="noopener">直接下载链接(SC)</a></p>
+</li>
+<li><p><a href="https://github.com/adobe-fonts/source-han-serif/tree/release" target="_blank" rel="noopener">思源宋体</a> <a href="https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SourceHanSerifSC_EL-M.zip" target="_blank" rel="noopener">直接下载链接(ExtraLight + Light + Regular + Medium SC)</a> <a href="https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SourceHanSerifSC_SB-H.zip" target="_blank" rel="noopener">直接下载链接(SemiBold + Bold + Heavy)</a></p>
+</li>
+<li><p><a href="https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne/" target="_blank" rel="noopener">Stylus</a></p>
+</li>
+</ul>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/njf36i92huw4m4clwl3d.jpg" alt=""></p>
+<p>因为Mac原版苹方体据说在低分屏上表现不佳，而且下载麻烦，故采用Adobe版的免费开源字体思源黑体。思源黑体和思源宋体可以选择简繁日韩任何一种下载，汉字部分是一样的，差别在标点符号的优先度，简体版优先显示大陆样式标点符号。以上给出简体版链接。</p>
+<h1 id="设置Chrome字体"><a href="#设置Chrome字体" class="headerlink" title="设置Chrome字体"></a>设置Chrome字体</h1><p>进入外观→自定义字体（这是Edge Chromium的画面，应该和Google Chrome一样）</p>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/xwfpiihbcxvhw1ltmsrd.jpg" alt=""></p>
+<p>Source Han Sans TC就是思源黑体繁体版，如果安装简体版应该会显示思源黑体。等寬字体没设也没关系，不影响。    </p>
+<p>设置完后你会发现有些网站的字体改变了，但是大部分没变，而且也没有渲染效果。因为大部分网站在CSS里面指定了要用的字体，我们需要用Stylus强制那些网站改用我们的字体并且帮我们渲染。</p>
+<h1 id="配置stylus"><a href="#配置stylus" class="headerlink" title="配置stylus"></a>配置stylus</h1><p>点Stylus图标，新建三个样式，名字自己取</p>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/bwmhmvjpofo3phq2fzo1.jpg" alt="img2"></p>
+<h2 id="全局样式"><a href="#全局样式" class="headerlink" title="全局样式"></a>全局样式</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">* &#123; -webkit-text-stroke-<span class="attribute">width</span>:<span class="number">0.16px</span>;&#125;</span><br><span class="line">* &#123; <span class="attribute">text-shadow</span>: <span class="number">0.01em</span> <span class="number">0.01em</span> <span class="number">0.02em</span> <span class="number">#707070</span>; &#125;</span><br><span class="line"><span class="keyword">@font-face</span> &#123;<span class="attribute">font-family</span>: <span class="string">"Arial"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Roboto"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family:  <span class="string">"Helvetica"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face&#123;font-family: <span class="string">"Microsoft YaHei"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"微軟正黑體"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Microsoft JhengHei"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Microsoft JhengHei UI"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Times New Roman"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Georgia"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Regular"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Times"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Regular"</span>)&#125;</span><br></pre></td></tr></table></figure>
+<p>字重：ExtraLight(250)、Light(300)、Normal(350)、Regular(400)、Medium(500)、Bold(700)、Heavy(900)。    </p>
+<p>数字越大字越粗，如果不喜欢Regular的效果可以自己调整。Mac的字体是偏粗的，但在低分屏上，太粗的字体会糊成一块，可以考虑改细一点。</p>
+<h2 id="加粗样式"><a href="#加粗样式" class="headerlink" title="加粗样式"></a>加粗样式</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* &#123; -webkit-text-stroke-<span class="attribute">width</span>: <span class="number">0.16px</span>;&#125;</span><br><span class="line">* &#123; <span class="attribute">text-shadow</span>: <span class="number">0.01em</span> <span class="number">0.01em</span> <span class="number">0.02em</span> <span class="number">#707070</span>; &#125;</span><br><span class="line"><span class="keyword">@font-face</span> &#123;<span class="attribute">font-family</span>: <span class="string">"Arial"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Bold"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Roboto"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Bold"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family:  <span class="string">"Helvetica"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Bold"</span>)&#125;</span><br><span class="line">@font-face&#123;font-family: <span class="string">"Microsoft YaHei"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Sans SC Bold"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Times New Roman"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Bold"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Georgia"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Bold"</span>)&#125;</span><br><span class="line">@font-face &#123;font-family: <span class="string">"Times"</span>; <span class="attribute">src</span>: local(<span class="string">"Source Han Serif SC Bold"</span>)&#125;</span><br></pre></td></tr></table></figure>
+<p>例如搜索页面适合用粗一点的字显示，可以针对个别网站设置更粗的字体。</p>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/dg3h3wdleubtumvwvo6u.jpg" alt=""></p>
+<h2 id="宋体样式（optional）"><a href="#宋体样式（optional）" class="headerlink" title="宋体样式（optional）"></a>宋体样式（optional）</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* &#123; -webkit-text-stroke-<span class="attribute">width</span>:<span class="number">0.16px</span>;&#125;</span><br><span class="line">* &#123; <span class="attribute">text-shadow</span>: <span class="number">0.01em</span> <span class="number">0.01em</span> <span class="number">0.02em</span> <span class="number">#707070</span>; &#125;</span><br><span class="line">* &#123; <span class="attribute">font-family</span>: <span class="string">"Source Han Serif SC Medium"</span><span class="meta">!important</span>;&#125;</span><br></pre></td></tr></table></figure>
+<p>强制知乎使用宋体，看起来更有文艺气息了有木有。</p>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/uuvvxucg3qfrvyfxdonx.jpg" alt=""></p>
+<h1 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h1><p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/fq8rc1z3kdvzu9nxqh6j.jpg" alt="左：有Stylus 右：没Stylus"><br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/rhlkfwpbskumrxp05sv5.jpg" alt=""><br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/plws2xmuixhwwb86p2tn.jpg" alt=""><br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/jegxudxuplqwlcb4twln.jpg" alt=""><br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/dqbbieoy5dsw1k2g1azw.jpg" alt=""><br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-27-stylus/nkyhmxytciadtz7ixifp.jpg" alt=""></p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装所需字体和Stylus插件"><span class="toc-text">安装所需字体和Stylus插件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置Chrome字体"><span class="toc-text">设置Chrome字体</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置stylus"><span class="toc-text">配置stylus</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#全局样式"><span class="toc-text">全局样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加粗样式"><span class="toc-text">加粗样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#宋体样式（optional）"><span class="toc-text">宋体样式（optional）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果图"><span class="toc-text">效果图</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-27-stylus/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/google-chrome/"><i class="fa fa-tags"></i>google chrome</a>
+     
+      <a href="/tags/stylish/"><i class="fa fa-tags"></i>stylish</a>
+     
+      <a href="/tags/stylus/"><i class="fa fa-tags"></i>stylus</a>
+     
+      <a href="/tags/font/"><i class="fa fa-tags"></i>font</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: admin[AT]phlinhng.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <div class="site-layer-input-choose">
+          <a href="javascript:void(0);" title="Change Search Engine">Google</a>
+        </div>
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/2020-02-27-first-photo/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159188335-1"></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159188335-1');
+  </script>
+
+
+
+
+
+
+    
+  </body>
+</html>
