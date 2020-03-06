@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.phlinhng.com/passages/2020-02-27-caddy-cf-cert-renew/</loc>
+    
+    <lastmod>2020-03-06T18:16:00.948Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.phlinhng.com/passages/2020-02-20-hello-world/</loc>
     
     <lastmod>2020-03-06T18:14:50.675Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://www.phlinhng.com/passages/2020-02-26-created-site-md/</loc>
     
     <lastmod>2020-02-27T13:00:49.050Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.phlinhng.com/passages/2020-02-27-caddy-cf-cert-renew/</loc>
-    
-    <lastmod>2020-02-27T02:25:15.519Z</lastmod>
     
   </url>
   
