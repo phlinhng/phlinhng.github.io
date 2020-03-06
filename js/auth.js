@@ -14,14 +14,14 @@
       return; 
     }
 
-    password = prompt('输入您的名称小写全拼 (例如: 李三 => lisan)');
+    password = prompt('輸入文章密碼');
     password = sha256(password || '');
 
     if(passwords.includes(password)) {
       expires = now + day * 3;
       window.localStorage.setItem('auth', btoa(`${password}:${expires}`));
     } else {
-      alert('您没有阅读权限');
+      alert('您沒有閱讀權限');
       window.location.href = root;
     }
   };
