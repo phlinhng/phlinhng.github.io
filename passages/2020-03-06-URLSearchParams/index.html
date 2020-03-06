@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>微信隱藏功能 WeChat Out 開啟方法 | Paper Hub</title>
+  <title>利用URLSearchParams獲取URL Query並獲取參數 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="wechat,wechat out,微信," />
+    <meta name="keywords" content="javascript,es6,react," />
   
 
   
-  <meta name="description" content="Wechat Out 消失原因 解決辦法">
+  <meta name="description" content="在寫網頁應用時，透過URL Query獲取頁面狀態非常方便。記錄一下使用ES6內建的URLSearchParams獲取URL Query和更新網址的方法。">
 
   
 
@@ -161,7 +161,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2020-02-28
+      <i class="fa fa-calendar"></i>2020-03-06
     </span>
     
     
@@ -171,30 +171,27 @@
     
   </div>
   <h1 class="passage-title">
-    微信隱藏功能 WeChat Out 開啟方法
+    利用URLSearchParams獲取URL Query並獲取參數
   </h1>
   
-    <div class="passage-cover">
-      <figure style="background-image:url(https://res.cloudinary.com/phlincloud/image/upload/v1582874298/images/2020-02-28-wechat-out/WeChat-Out_pk4r4d.png);"></figure>
-    </div>
-  
   <article class="passage-article">
-    <p>眾所皆知，微信有個只對海外手機號開放的隱藏功能<a href="https://blog.wechat.com/tag/wechat-out/" target="_blank" rel="noopener">WeChat Out</a>，可以通過網路直接打給任何電話號碼（需充值）。但有時候會發生Wechat Out入口突然消失或綁定境外手機後仍然沒有出現的情形，今天我在把原本的香港手機號換成Google Voice的過程中也遇到了，經過一番嘗試才又重新找回來，總結一下正確開啟Wechat Out的方式。微信版本v7.11    </p>
-<h2 id="WeChat-Out開啟條件"><a href="#WeChat-Out開啟條件" class="headerlink" title="WeChat Out開啟條件"></a>WeChat Out開啟條件</h2><blockquote>
-<ol>
-<li>微信綁定海外手機號（台灣不行，試過香港、美國、泰國都可以）</li>
-<li>綁定的海外手機號沒被WX block</li>
-<li>換綁海外手機號後用境外IP重開微信一次</li>
-<li>所用微信版本來自海外App store帳戶（不確定）    </li>
+    <h2 id="獲取URL-Query-get"><a href="#獲取URL-Query-get" class="headerlink" title="獲取URL Query (get)"></a>獲取URL Query (get)</h2><p>假設url query為<code>?foo1=bar1&amp;foo2=bar2</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const params &#x3D; new URLSearchParams(window.location.search);</span><br><span class="line">params.get(&#39;foo1&#39;); &#x2F;&#x2F; &quot;bar1&quot;</span><br><span class="line">console.log(params.toString()); &#x2F;&#x2F; &quot;foo1&#x3D;bar1&amp;foo2&#x3D;bar2&quot; 就是?之後的部分</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新URL-Query-set-append"><a href="#更新URL-Query-set-append" class="headerlink" title="更新URL Query (set, append)"></a>更新URL Query (set, append)</h2><p>假設url query為<code>?foo1=bar1&amp;foo2=bar2</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const params &#x3D; new URLSearchParams(window.location.search);</span><br><span class="line">params.set(&#39;foo1&#39;,&#39;abc&#39;); &#x2F;&#x2F; replace the original value</span><br><span class="line">console.log(params.toString()); &#x2F;&#x2F; &quot;foo1&#x3D;abc&amp;foo2&#x3D;bar2&quot;</span><br><span class="line">params.append(&#39;foo1&#39;,&#39;def&#39;); &#x2F;&#x2F; add a new value</span><br><span class="line">console.log(params.toString()); &#x2F;&#x2F; &quot;foo1&#x3D;abc&amp;foo2&#x3D;bar2&amp;foo1&#x3D;def&quot;</span><br><span class="line">params.get(&#39;foo1&#39;); &#x2F;&#x2F; &#39;abc&#39;</span><br><span class="line">params.getAll(&#39;foo1&#39;); &#x2F;&#x2F; [&#39;abc&#39;,&#39;def&#39;]</span><br></pre></td></tr></table></figure>
+<p>這時會發現<code>console.log</code>雖然打印出正確的值，網址列卻沒更新，以下代碼可以更新網址列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.history.replaceState(&#123;&#125;, &#39;&#39;, &#96;$&#123;window.location.pathname&#125;?$&#123;params&#125;&#96;);</span><br></pre></td></tr></table></figure>
+<p>合起來就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const params &#x3D; new URLSearchParams(window.location.search);</span><br><span class="line">params.set(&#39;foo1&#39;,&#39;abc&#39;);</span><br><span class="line">window.history.replaceState(&#123;&#125;, &#39;&#39;, &#96;$&#123;window.location.pathname&#125;?$&#123;params&#125;&#96;);</span><br></pre></td></tr></table></figure>
+<p>新的url query為<code>?foo1=abc&amp;foo2=bar2</code></p>
+<h2 id="在React中於頁面加載時讀取URL-Query"><a href="#在React中於頁面加載時讀取URL-Query" class="headerlink" title="在React中於頁面加載時讀取URL Query"></a>在React中於頁面加載時讀取URL Query</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useEffect &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">function myApp ()&#123;</span><br><span class="line">    useEffect ( () &#x3D;&gt; &#123;</span><br><span class="line">    if(window.location.search)&#123;</span><br><span class="line">      const searchParams &#x3D; new URLSearchParams(window.location.search);</span><br><span class="line">      doSomething (searchParams.get(&#39;foo1&#39;)); &#x2F;&#x2F; do something</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,[]); &#x2F;&#x2F; this empty array is a trick to make useEffect to run only once when the page mounted</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><code>URLSearchParams</code>: <a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams" target="_blank" rel="noopener">Mozilla 文檔</a></li>
+<li><code>window.history.replaceState</code>: <a href="https://developers.google.com/web/updates/2016/01/urlsearchparams" target="_blank" rel="noopener">Google Developers 文檔</a></li>
+<li><code>useEffect</code>: <a href="https://reactjs.org/docs/hooks-effect.html" target="_blank" rel="noopener">React 官方文檔</a>   </li>
 </ol>
-</blockquote>
-<p>以上就是開啟條件，<strong>不用更換手機語言、不用重新登入、不用重新安裝。</strong>簡單的說就是：<strong>海外IP、海外手機號</strong>，兩者缺一不可。</p>
-<h2 id="Wechat-Out消失解決辦法"><a href="#Wechat-Out消失解決辦法" class="headerlink" title="Wechat Out消失解決辦法"></a>Wechat Out消失解決辦法</h2><p>遇到Wechat Out消失就是以上四個條件其中一個沒做好，解決辦法如下。</p>
-<h3 id="沒有綁定海外手機號"><a href="#沒有綁定海外手機號" class="headerlink" title="沒有綁定海外手機號"></a>沒有綁定海外手機號</h3><p>上淘寶買一個泰國AIS Sim2Fly或香港電話卡，或者請有海外手機號碼的朋友幫忙接一下驗證碼。</p>
-<h3 id="綁定的海外手機號被WX-block"><a href="#綁定的海外手機號被WX-block" class="headerlink" title="綁定的海外手機號被WX block"></a>綁定的海外手機號被WX block</h3><p>像我淘寶買的Google Voice號雖然可以綁定，綁定後卻無法開啟Wechat Out，推測現在WX block了接碼平台和虛擬號碼的Wechat Out功能。這時候換個號碼綁定就好了。</p>
-<h3 id="換綁海外手機號後用境外IP重開微信一次"><a href="#換綁海外手機號後用境外IP重開微信一次" class="headerlink" title="換綁海外手機號後用境外IP重開微信一次"></a>換綁海外手機號後用境外IP重開微信一次</h3><p>如果你肉身在境外，通常換綁後會馬上出現Wechat Out入口，第一次使用還會送1USD等值話費。在牆內的話就要掛個梯子，<strong>選全局代理模式</strong>讓微信流量通過代理，再重開微信就有了。</p>
-<h3 id="以上方法都不行"><a href="#以上方法都不行" class="headerlink" title="以上方法都不行"></a>以上方法都不行</h3><p>試試看用外區App Store安裝微信，因為我的微信本來就是外區帳號裝的，就沒有做實驗判斷商店地區是否會影響Wechat out開啟。建議再檢查一次是否為手機號和IP的問題，若手機號有問題，改語言、重新登入都是沒有用的。</p>
-<h2 id="成功開啟畫面"><a href="#成功開啟畫面" class="headerlink" title="成功開啟畫面"></a>成功開啟畫面</h2><p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-28-wechat-out/IMG_4786_rccxdh.png" alt=""> <img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-02-28-wechat-out/IMG_5196_ylik0r.png" alt=""></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -202,7 +199,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WeChat-Out開啟條件"><span class="toc-text">WeChat Out開啟條件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wechat-Out消失解決辦法"><span class="toc-text">Wechat Out消失解決辦法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#沒有綁定海外手機號"><span class="toc-text">沒有綁定海外手機號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#綁定的海外手機號被WX-block"><span class="toc-text">綁定的海外手機號被WX block</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#換綁海外手機號後用境外IP重開微信一次"><span class="toc-text">換綁海外手機號後用境外IP重開微信一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以上方法都不行"><span class="toc-text">以上方法都不行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成功開啟畫面"><span class="toc-text">成功開啟畫面</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#獲取URL-Query-get"><span class="toc-text">獲取URL Query (get)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新URL-Query-set-append"><span class="toc-text">更新URL Query (set, append)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在React中於頁面加載時讀取URL-Query"><span class="toc-text">在React中於頁面加載時讀取URL Query</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
@@ -211,7 +208,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-02-28-wechat-out/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-06-URLSearchParams/</a>
         </div>
       
       <div>
@@ -222,11 +219,11 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/wechat/"><i class="fa fa-tags"></i>wechat</a>
+      <a href="/tags/javascript/"><i class="fa fa-tags"></i>javascript</a>
      
-      <a href="/tags/wechat-out/"><i class="fa fa-tags"></i>wechat out</a>
+      <a href="/tags/es6/"><i class="fa fa-tags"></i>es6</a>
      
-      <a href="/tags/%E5%BE%AE%E4%BF%A1/"><i class="fa fa-tags"></i>微信</a>
+      <a href="/tags/react/"><i class="fa fa-tags"></i>react</a>
     
     </div>
   
@@ -291,10 +288,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-03-06-URLSearchParams/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-02-27-stylus/" data-enable="true">
+    <a href="/passages/2020-02-28-wechat-out/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
