@@ -185,8 +185,9 @@
   <article class="passage-article">
     <p>有神人集成了<a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">Linux系統TCP加速內核一鍵更換腳本</a>，使用起來非常方便，但是在Ubuntu的機器上使用會產生ssh無法連線的問題，原因是一鍵腳本中的重啟指令會讓ssh失效，自行輸入重啟指令或用VPS網頁重啟VPS即可解決。</p>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><blockquote>
-<p>SSH is not the problem. The command you use to reboot is the problem: don’t do reboot now, do reboot or shutdown -r now to reboot your system.<br>簡單的說，在Ubuntu上用<code>reboot now</code>會造成ssh失效，使用<code>reboot</code>或<code>shutdown -r now</code>就沒事。詳細原因見<a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
+<p>SSH is not the problem. The command you use to reboot is the problem: don’t do reboot now, do reboot or shutdown -r now to reboot your system.</p>
 </blockquote>
+<p>簡單的說，在Ubuntu上用<code>reboot now</code>會造成ssh失效，使用<code>reboot</code>或<code>shutdown -r now</code>就沒事。詳細原因見<a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
 <h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><ol>
 <li>安裝內核時不要讓腳本重啟VPS，應該退出腳本後自行重啟</li>
 <li>如果己經用腳本重啟造成ssh無法開機，從VPS供應商的網頁console再輸入一次<code>reboot</code>即可復活</li>
