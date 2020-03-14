@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>標籤: vps | Paper Hub</title>
+  <title>2020-03-14-bbrplus | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="ubuntu,vps,linux," />
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="有神人開發出了Linux架構TCP加速內核一鍵更換腳本，使用起來非常方便，但是在Ubuntu的機器上使用會產生ssh無法連線的問題，原因是一鍵腳本中的重啟指令會讓ssh失效，自行輸入重啟指令或用VPS網頁重啟VPS即可解決。">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,37 +165,82 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">標籤: vps</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-03-14
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    2020-03-14-bbrplus
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-03-14</time>
-      <a target="_self" href="/passages/2020-03-14-bbrplus/">2020-03-14-bbrplus</a>
-    </div>
+  <article class="passage-article">
+    <p>有神人集成了<a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">Linux系統TCP加速內核一鍵更換腳本</a>，使用起來非常方便，但是在Ubuntu的機器上使用會產生ssh無法連線的問題，原因是一鍵腳本中的重啟指令會讓ssh失效，自行輸入重啟指令或用VPS網頁重啟VPS即可解決。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><blockquote>
+<p>SSH is not the problem. The command you use to reboot is the problem: don’t do reboot now, do reboot or shutdown -r now to reboot your system.<br>簡單的說，在Ubuntu上用<code>reboot now</code>會造成ssh失效，使用<code>reboot</code>或<code>shutdown -r now</code>就沒事。詳細原因見<a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
+</blockquote>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><ol>
+<li>安裝內核時不要讓腳本重啟VPS，應該退出腳本後自行重啟</li>
+<li>如果己經用腳本重啟造成ssh無法開機，從VPS供應商的網頁console再輸入一次<code>reboot</code>即可復活</li>
+<li>裝系統時選用Debian9，可以完美適配腳本中的重開機指令<del>（所以我以前都是把VPS重裝成Debian9再重配一次代理，都是淚啊）</del></li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">https://github.com/chiakge/Linux-NetSpeed</a><br><a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解決方法"><span class="toc-text">解決方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-03-07</time>
-      <a target="_self" href="/passages/2020-03-07-docker-host-time-sync/">Docker container與宿主機時間同步</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-14-bbrplus/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-caddy-cf-cert-renew/">利用Cloudflare API讓Caddy自動續簽SSL證書</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/ubuntu/"><i class="fa fa-tags"></i>ubuntu</a>
+     
+      <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
     
-    <div class="timeline-item">
-      <time>2020-02-26</time>
-      <a target="_self" href="/passages/2020-02-26-v2ray-resource/">架設v2Ray實用腳本與資源鏈接</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -247,16 +292,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2020-03-11-vmess-ss-trojan-editor/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
