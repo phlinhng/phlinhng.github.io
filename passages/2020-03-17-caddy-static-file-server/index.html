@@ -191,7 +191,8 @@
 <p>請依自己的情形調整相關路徑</p>
 <h2 id="Caddy-反向代設置"><a href="#Caddy-反向代設置" class="headerlink" title="Caddy 反向代設置"></a>Caddy 反向代設置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">share.domain.com &#123;</span><br><span class="line">    gzip</span><br><span class="line">    timeouts none</span><br><span class="line">    proxy &#x2F; file_server:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>確定<code>share.domain.com</code>有正確解析到VPS後，輸入網址就可以看到對應資料夾內的檔案了。</p>
-<p>非常簡單就設置好了，雖然網頁非常簡陋，但用來分享些小檔案(例如vpn客戶端安裝檔)己綽綽有餘，反正搬瓦工最便宜的機子20G硬盤也不要期望能裝多少檔案。如果真的有網盤以及顏值需求，可以用以上提到的其他網盤工具搭建。</p>
+<h2 id="Screenshot"><a href="#Screenshot" class="headerlink" title="Screenshot"></a>Screenshot</h2><p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-03-17-caddy-static-file-server/Screenshot_2020-03-17_at_2.01.44_AM_peeczb.png" alt=""><br>設計感基本上是負的。反正江湖救急，能用就行</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>利用Caddy和Docker，一個基本的檔案服務器非常簡單就設置好了，雖然網頁非常簡陋，但用來分享些小檔案(例如vpn客戶端安裝檔)己綽綽有餘，反正搬瓦工最便宜的機子20G硬盤也不要期望能裝多少東西。若有網盤以及顏值需求，可以用以上提到的其他網盤工具搭建。</p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -199,7 +200,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#項目鏈接"><span class="toc-text">項目鏈接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose設置"><span class="toc-text">docker-compose設置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caddy-反向代設置"><span class="toc-text">Caddy 反向代設置</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#項目鏈接"><span class="toc-text">項目鏈接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose設置"><span class="toc-text">docker-compose設置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caddy-反向代設置"><span class="toc-text">Caddy 反向代設置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Screenshot"><span class="toc-text">Screenshot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol>
   </div>
 </aside>
   
