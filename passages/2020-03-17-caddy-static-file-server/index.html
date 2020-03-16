@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>Ubuntu VPS使用加速內核腳本後ssh connection refused的解決辦法 | Paper Hub</title>
+  <title>利用caddy與docker搭建靜態網頁服務器 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="ubuntu,vps,linux," />
+    <meta name="keywords" content="vps,caddy,docker," />
   
 
   
-  <meta name="description" content="有神人開發出了Linux架構TCP加速內核一鍵更換腳本，使用起來非常方便，但是在Ubuntu的機器上使用會產生ssh無法連線的問題，原因是一鍵腳本中的重啟指令會讓ssh失效，自行輸入重啟指令或用VPS網頁重啟VPS即可解決。">
+  <meta name="description" content="最近在想還能拿VPS來做什麼，覺得拿來搭個簡易的檔案服務器，生成下載鏈接分享一些會被國內網盤封殺的小檔案給朋友應該不錯。本來想搭建像owncloud、nextcloud或pydio之類的網盤，但是配置太麻煩。後來發現一個簡單的靜態檔案服務器就能完成需求了，用docker直接部署非常容易。">
 
   
 
@@ -169,7 +169,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2020-03-14
+      <i class="fa fa-calendar"></i>2020-03-17
     </span>
     
     
@@ -179,21 +179,19 @@
     
   </div>
   <h1 class="passage-title">
-    Ubuntu VPS使用加速內核腳本後ssh connection refused的解決辦法
+    利用caddy與docker搭建靜態網頁服務器
   </h1>
   
   <article class="passage-article">
-    <p>有神人集成了<a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">Linux系統TCP加速內核一鍵更換腳本</a>，使用起來非常方便，但是在Ubuntu的機器上使用會產生ssh無法連線的問題，原因是一鍵腳本中的重啟指令會讓ssh失效，自行輸入重啟指令或用VPS網頁重啟VPS即可解決。</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><blockquote>
-<p>SSH is not the problem. The command you use to reboot is the problem: don’t do reboot now, do reboot or shutdown -r now to reboot your system.</p>
+    <p>最近在想還能拿VPS來做什麼，覺得拿來搭個簡易的檔案服務器，生成下載鏈接分享一些<del>會被國內網盤封殺的</del>小檔案給朋友應該不錯。本來想搭建像owncloud、nextcloud或pydio之類的網盤，但是配置太麻煩。後來發現一個簡單的<a href="https://github.com/halverneus/static-file-server" target="_blank" rel="noopener">靜態檔案服務器</a>就能完成需求了，用docker直接部署非常容易。</p>
+<h2 id="項目鏈接"><a href="#項目鏈接" class="headerlink" title="項目鏈接"></a>項目鏈接</h2><blockquote>
+<p><a href="https://github.com/halverneus/static-file-server" target="_blank" rel="noopener">https://github.com/halverneus/static-file-server</a></p>
 </blockquote>
-<p>簡單的說，在Ubuntu上用<code>reboot now</code>會造成ssh失效，使用<code>reboot</code>或<code>shutdown -r now</code>就沒事。詳細原因見<a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
-<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><ol>
-<li>安裝內核時不要讓腳本重啟VPS，應該退出腳本後自行重啟</li>
-<li>如果己經用腳本重啟造成ssh無法開機，從VPS供應商的網頁console再輸入一次<code>reboot</code>即可復活</li>
-<li>裝系統時選用Debian9，可以完美適配腳本中的重開機指令<del>（所以我以前都是把VPS重裝成Debian9再重配一次代理，都是淚啊）</del></li>
-</ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">https://github.com/chiakge/Linux-NetSpeed</a><br><a href="https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server" target="_blank" rel="noopener">https://askubuntu.com/questions/483670/what-causes-ssh-problems-after-rebooting-a-14-04-server</a></p>
+<h2 id="docker-compose設置"><a href="#docker-compose設置" class="headerlink" title="docker-compose設置"></a>docker-compose設置</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">caddy:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">./src/caddy</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"80:80"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"443:443"</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./src/caddy/caddy:/root/.caddy</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./src/caddy/Caddyfile:/etc/Caddyfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">"caddy --conf /etc/Caddyfile"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ACME_AGREE=true</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">file</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">file_server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">halverneus/static-file-server:latest</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/shared:/web</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">file</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">file:</span></span><br></pre></td></tr></table></figure>
+<p>請依自己的情形調整相關路徑</p>
+<h2 id="Caddy-反向代設置"><a href="#Caddy-反向代設置" class="headerlink" title="Caddy 反向代設置"></a>Caddy 反向代設置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">share.domain.com &#123;</span><br><span class="line">    gzip</span><br><span class="line">    timeouts none</span><br><span class="line">    proxy &#x2F; file_server:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>確定<code>share.domain.com</code>有正確解析到VPS後，輸入網址就可以看到對應資料夾內的檔案了。</p>
+<p>非常簡單就設置好了，雖然網頁非常簡陋，但用來分享些小檔案(例如vpn客戶端安裝檔)己綽綽有餘，反正搬瓦工最便宜的機子20G硬盤也不要期望能裝多少檔案。如果真的有網盤以及顏值需求，可以用以上提到的其他網盤工具搭建。</p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -201,7 +199,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解決方法"><span class="toc-text">解決方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#項目鏈接"><span class="toc-text">項目鏈接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose設置"><span class="toc-text">docker-compose設置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caddy-反向代設置"><span class="toc-text">Caddy 反向代設置</span></a></li></ol>
   </div>
 </aside>
   
@@ -210,7 +208,7 @@
       
         <div>
           原文鏈接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-14-bbrplus/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-17-caddy-static-file-server/</a>
         </div>
       
       <div>
@@ -221,11 +219,11 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/ubuntu/"><i class="fa fa-tags"></i>ubuntu</a>
-     
       <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
      
-      <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
+      <a href="/tags/caddy/"><i class="fa fa-tags"></i>caddy</a>
+     
+      <a href="/tags/docker/"><i class="fa fa-tags"></i>docker</a>
     
     </div>
   
@@ -290,10 +288,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-03-17-caddy-static-file-server/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-03-11-vmess-ss-trojan-editor/" data-enable="true">
+    <a href="/passages/2020-03-14-bbrplus/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
