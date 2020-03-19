@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案SearX，可以自建搜索入口代理各個搜索引擎，據說還能保護個人隱私，安全上網。">
+  <meta name="description" content="最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案SearX，可以自建搜索入口代理各個搜索引擎，還能保護個人隱私，安全上網。">
 
   
 
@@ -183,7 +183,7 @@
   </h1>
   
   <article class="passage-article">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案<a href="https://github.com/asciimoo/searx" target="_blank" rel="noopener">SearX</a>，可以自建搜索入口代理各個搜索引擎，據說還能保護個人隱私。其實除了Google以外，Searx還預設集成了bing、duckduckgo、startpage、wikipedia…等70幾種搜索引擎，也支持自行添加，功能非常全面。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案<a href="https://github.com/asciimoo/searx" target="_blank" rel="noopener">SearX</a>，可以自建搜索入口代理各個搜索引擎，還能保護個人隱私。除了Google以外，Searx預設集成了bing、duckduckgo、startpage、wikipedia…等82幾種搜索引擎，也支持自行添加，功能非常全面。</p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用docker部署，caddy作為web server</p>
 <h3 id="docker-compse-yml"><a href="#docker-compse-yml" class="headerlink" title="docker-compse.yml"></a>docker-compse.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">searx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">searx/searx:latest</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./src/searx:/etc/searx</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">BIND_ADDRESS=0.0.0.0:8082</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">BASE_URL=https://search.yourdomain.com/</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">search</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
 <p><code>BASE_URL</code>改成你的域名，記得將caddy和searx放在同一個netwok中。</p>
