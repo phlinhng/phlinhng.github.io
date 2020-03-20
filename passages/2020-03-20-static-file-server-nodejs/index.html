@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="vps,docker," />
+    <meta name="keywords" content="vps,caddy,docker," />
   
 
   
@@ -182,6 +182,10 @@
     更加美觀的靜態檔案服務器
   </h1>
   
+    <div class="passage-cover">
+      <figure style="background-image:url(https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png);"></figure>
+    </div>
+  
   <article class="passage-article">
     <p>之前寫過<a href="https://www.phlinhng.com/passages/2020-03-17-caddy-static-file-server/">利用caddy與docker搭建靜態網頁服務器</a>，最近發現一個更美觀的靜態檔案服務器<a href="https://github.com/zeit/serve" target="_blank" rel="noopener">serve</a>，使用node實現。</p>
 <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM node:latest</span><br><span class="line"></span><br><span class="line">RUN mkdir -p &#x2F;root&#x2F;file</span><br><span class="line">WORKDIR &#x2F;root&#x2F;file</span><br><span class="line">RUN npm install serve</span><br></pre></td></tr></table></figure>
@@ -189,6 +193,7 @@
 <p>預設運作在port 5000，由於docker每個cotainer內部有自己的網絡，因此內部端口和別的container重複也不會影響使用。</p>
 <h3 id="Caddyfile"><a href="#Caddyfile" class="headerlink" title="Caddyfile"></a>Caddyfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">share.phlin.cc &#123;</span><br><span class="line">    gzip</span><br><span class="line">    timeouts none</span><br><span class="line">    proxy &#x2F; file_server:5000</span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="Screeshot"><a href="#Screeshot" class="headerlink" title="Screeshot"></a>Screeshot</h2><p><img src="https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png" alt=""><br>source: <a href="https://github.com/zeit/serve" target="_blank" rel="noopener">https://github.com/zeit/serve</a></p>
 <h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>發現這類靜態服務器的請求方式是GET，如果寫一個純文字檔存base64 vmess連結丟到共享文件夾裡就能當簡易訂閱API使用了。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://github.com/zeit/serve" target="_blank" rel="noopener">https://github.com/zeit/serve</a></li>
@@ -200,7 +205,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation"><span class="toc-text">Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml"><span class="toc-text">docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caddyfile"><span class="toc-text">Caddyfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#後記"><span class="toc-text">後記</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation"><span class="toc-text">Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml"><span class="toc-text">docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caddyfile"><span class="toc-text">Caddyfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Screeshot"><span class="toc-text">Screeshot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#後記"><span class="toc-text">後記</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
@@ -221,6 +226,8 @@
     <div class="passage-tags">
      
       <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/caddy/"><i class="fa fa-tags"></i>caddy</a>
      
       <a href="/tags/docker/"><i class="fa fa-tags"></i>docker</a>
     
