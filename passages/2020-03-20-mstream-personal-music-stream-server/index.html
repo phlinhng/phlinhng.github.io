@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>Searx 建立私有搜索引擎站 安全反代Google搜索 保護隱私 | Paper Hub</title>
+  <title>mstream 建構個人音樂雲 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="vps,proxy,caddy," />
+    <meta name="keywords" content="vps,docker," />
   
 
   
-  <meta name="description" content="最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案SearX，可以自建搜索入口代理各個搜索引擎，還能保護個人隱私，安全上網。">
+  <meta name="description" content="mStream是一個可以在服務器上搭建私有音樂串流服務的開源專案，而且界面挺酷的。">
 
   
 
@@ -179,22 +179,34 @@
     
   </div>
   <h1 class="passage-title">
-    Searx 建立私有搜索引擎站 安全反代Google搜索 保護隱私
+    mstream 建構個人音樂雲
   </h1>
   
+    <div class="passage-cover">
+      <figure style="background-image:url(https://raw.githubusercontent.com/IrosTheBeggar/mStream/master/public/img/designs/mstreamv4.png);"></figure>
+    </div>
+  
   <article class="passage-article">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近用caddy建了幾個反向代理站，但是聽說直接反代Google容易被GFW當成Google本人牆掉，造成域名報廢，所以一直不敢試。後來發現一個強大開源專案<a href="https://github.com/asciimoo/searx" target="_blank" rel="noopener">SearX</a>，可以自建搜索入口代理各個搜索引擎，還能保護個人隱私。除了Google以外，Searx預設集成了bing、duckduckgo、startpage、wikipedia…等82幾種搜索引擎，也支持自行添加，功能非常全面。</p>
-<h2 id="SearX-特性"><a href="#SearX-特性" class="headerlink" title="SearX 特性"></a>SearX 特性</h2><p>1.Self-hosting<br>2. 沒有用戶跟蹤<br>3. 沒有用戶分析<br>4. 約70個受支持的搜索引擎<br>4. 輕鬆集成其他搜索引擎<br>5. 默認情況下不使用Cookies<br>6. 安全的加密連接(HTTPS/SSL)<br>7. 可以代理網頁<br>8. 可以設置為默認搜索引擎<br>9. 可自定義(主題，搜索設置，隱私設置)<br>10. 不同的搜尋語言<br>Source: (<a href="https://ubuntuqa.com/zh-tw/article/8883.html" target="_blank" rel="noopener">https://ubuntuqa.com/zh-tw/article/8883.html</a>)</p>
-<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用docker部署，caddy作為web server</p>
-<h3 id="docker-compse-yml"><a href="#docker-compse-yml" class="headerlink" title="docker-compse.yml"></a>docker-compse.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">searx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">searx/searx:latest</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./src/searx:/etc/searx</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">BIND_ADDRESS=0.0.0.0:8082</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">BASE_URL=https://search.yourdomain.com/</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">search</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p><code>BASE_URL</code>改成你的域名，記得將caddy和searx放在同一個netwok中。</p>
-<h3 id="Caddyfile"><a href="#Caddyfile" class="headerlink" title="Caddyfile"></a>Caddyfile</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">search.phlin.cc &#123;</span><br><span class="line">    gzip</span><br><span class="line">    timeouts none</span><br><span class="line">    proxy / searx:<span class="number">8082</span> &#123;</span><br><span class="line">        transparent</span><br><span class="line">    &#125;</span><br><span class="line">    filter rule &#123;</span><br><span class="line">        content_type text/.*</span><br><span class="line">        search_pattern www.ptt.cc</span><br><span class="line">        replacement bbs.xxxx.com</span><br><span class="line">    &#125;</span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因為我還反代了ptt，filter的規則可以將搜索結果替換成ptt反代站的連結，若你還建了其他反代站（例如wikipedia），可以自己添加filter規則。</p>
-<h2 id="訪問"><a href="#訪問" class="headerlink" title="訪問"></a>訪問</h2><p>打開<code>https://search.yourdomain.com/</code>就能看到searx的主頁面了。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://gogonews.cc/article/7432938.html" target="_blank" rel="noopener">利用 SeraX 搭建私人搜尋引擎</a></li>
-<li><a href="https://ubuntuqa.com/zh-tw/article/8883.html" target="_blank" rel="noopener">如何在Ubuntu上安裝SearX Search Engine</a></li>
+    <p><a href="https://www.mstream.io/" target="_blank" rel="noopener">mStream</a>是一個可以在服務器上搭建私有音樂串流服務的開源專案，而且界面挺酷的。</p>
+<h2 id="特點"><a href="#特點" class="headerlink" title="特點"></a>特點</h2><ol>
+<li>有官方docker image，安裝容易</li>
+<li>只要將音檔放到資料夾就自動同步，維護容易</li>
+<li>提供手機app</li>
+<li>github 1.5k stars，比Koel的1.2k stars還多</li>
 </ol>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>依然是使用Docker，畢竟用別人寫好的映像一鍵部署實在太香了。<br><code>docker-compose.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mstream:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">linuxserver/mstream</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3005</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PASSWORD=password</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USE_JSON=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">path</span> <span class="string">to</span> <span class="string">config:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">path</span> <span class="string">to</span> <span class="string">music:/music</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<p>build完打開<code>https://your-ip:3005</code>即可，會web服務器反代的可以自己設置。</p>
+<h2 id="界面圖"><a href="#界面圖" class="headerlink" title="界面圖"></a>界面圖</h2><p><img src="image/upload/v1584713961/images/2020-03-20-mstream-personal-music-stream-server/Screenshot_2020-03-20_at_10.18.27_PM_hmi87p.png" alt=""><br>雖然有種10年前的工程師審美感，還是滿好看的。</p>
+<h2 id="類似專案"><a href="#類似專案" class="headerlink" title="類似專案"></a>類似專案</h2><ol>
+<li><a href="https://github.com/phanan/koel" target="_blank" rel="noopener">Koel</a>：基於vue實現的個人音樂串流服務，網頁介面(電腦/移動端自適應)，沒有官方docker，安裝略為麻煩</li>
+<li><a href="https://github.com/maomao1996/Vue-mmPlayer" target="_blank" rel="noopener">mmPlayer</a>：基於網易雲音樂API實現的個人網易雲播放器，個人網易雲是Vue常見的新手練手項目，網上一把抓，mmPlayer看起來是完成度最高的</li>
+</ol>
+<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
+<li><a href="https://www.mstream.io/" target="_blank" rel="noopener">mStream official website</a></li>
+<li><a href="https://github.com/IrosTheBeggar/mStream/tree/master/" target="_blank" rel="noopener">mStream github repo</a></li>
+<li><a href="https://hub.docker.com/r/linuxserver/mstream" target="_blank" rel="noopener">mStream DockerHub</a></li>
+</ul>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -202,7 +214,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SearX-特性"><span class="toc-text">SearX 特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-text">安裝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compse-yml"><span class="toc-text">docker-compse.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caddyfile"><span class="toc-text">Caddyfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#訪問"><span class="toc-text">訪問</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特點"><span class="toc-text">特點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#界面圖"><span class="toc-text">界面圖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類似專案"><span class="toc-text">類似專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考連結"><span class="toc-text">參考連結</span></a></li></ol>
   </div>
 </aside>
   
@@ -211,7 +223,7 @@
       
         <div>
           原文鏈接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-20-serax-google-proxy/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-20-mstream-personal-music-stream-server/</a>
         </div>
       
       <div>
@@ -224,9 +236,7 @@
      
       <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
      
-      <a href="/tags/proxy/"><i class="fa fa-tags"></i>proxy</a>
-     
-      <a href="/tags/caddy/"><i class="fa fa-tags"></i>caddy</a>
+      <a href="/tags/docker/"><i class="fa fa-tags"></i>docker</a>
     
     </div>
   
@@ -291,10 +301,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-03-20-mstream-personal-music-stream-server/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-03-17-caddy-static-file-server/" data-enable="true">
+    <a href="/passages/2020-03-20-serax-google-proxy/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
