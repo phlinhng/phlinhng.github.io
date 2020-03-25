@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>mStream 建構個人音樂雲 | Paper Hub</title>
+  <title>更加美觀的靜態檔案服務器 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="vps,docker," />
+    <meta name="keywords" content="vps,caddy,docker," />
   
 
   
-  <meta name="description" content="mStream是一個可以在服務器上搭建私有音樂串流服務的開源專案，而且界面挺酷的。">
+  <meta name="description" content="之前寫過利用caddy與docker搭建靜態網頁服務器，最近發現一個更美觀的靜態檔案服務器serve，使用node實現。">
 
   
 
@@ -169,7 +169,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2020-03-20
+      <i class="fa fa-calendar"></i>2020-03-21
     </span>
     
     
@@ -179,37 +179,24 @@
     
   </div>
   <h1 class="passage-title">
-    mStream 建構個人音樂雲
+    更加美觀的靜態檔案服務器
   </h1>
   
     <div class="passage-cover">
-      <figure style="background-image:url(https://raw.githubusercontent.com/IrosTheBeggar/mStream/master/public/img/designs/mstreamv4.png);"></figure>
+      <figure style="background-image:url(https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png);"></figure>
     </div>
   
   <article class="passage-article">
-    <p><a href="https://www.mstream.io/" target="_blank" rel="noopener">mStream</a>是一個可以在服務器上搭建私有音樂串流服務的開源專案，而且界面挺酷的。</p>
-<h2 id="特點"><a href="#特點" class="headerlink" title="特點"></a>特點</h2><ol>
-<li>有官方docker image，安裝容易</li>
-<li>只要將音檔放到資料夾就自動同步，維護容易</li>
-<li>電腦/手機頁面自適應</li>
-<li>在手機上可以背景播放</li>
-<li>提供手機app（目前只有Android版，iOS版開發中）</li>
-<li>視覺化等效器<del>（夢回Windows Media Player 9）</del></li>
-<li>創建歌單分享鏈接，可設定鏈接到期時間</li>
-<li>github 1.5k stars，比Koel的1.2k stars還多</li>
-</ol>
-<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>依然是使用Docker，畢竟用別人寫好的映像一鍵部署實在太香了。<br><code>docker-compose.yml</code></p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mstream:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">linuxserver/mstream</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3005</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER=admin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PASSWORD=password</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USE_JSON=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">path</span> <span class="string">to</span> <span class="string">config:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">path</span> <span class="string">to</span> <span class="string">music:/music</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p>build完打開<code>https://your-ip:3005</code>即可，會web服務器反代的可以自己設置。</p>
-<h2 id="界面圖"><a href="#界面圖" class="headerlink" title="界面圖"></a>界面圖</h2><p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/image/upload/v1584713961/images/2020-03-20-mstream-personal-music-stream-server/Screenshot_2020-03-20_at_10.18.27_PM_hmi87p.png" alt=""><br>雖然有種10年前的工程師審美感，還是滿好看的。</p>
-<h2 id="類似專案"><a href="#類似專案" class="headerlink" title="類似專案"></a>類似專案</h2><ol>
-<li><a href="https://github.com/phanan/koel" target="_blank" rel="noopener">Koel</a>：基於vue實現的個人音樂串流服務，網頁介面(電腦/移動端自適應)，沒有官方docker，安裝略為麻煩</li>
-<li><a href="https://github.com/maomao1996/Vue-mmPlayer" target="_blank" rel="noopener">mmPlayer</a>：基於網易雲音樂API實現的個人網易雲播放器，個人網易雲是Vue常見的新手練手項目，網上一把抓，mmPlayer看起來是完成度最高的</li>
-</ol>
-<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
-<li><a href="https://www.mstream.io/" target="_blank" rel="noopener">mStream official website</a></li>
-<li><a href="https://github.com/IrosTheBeggar/mStream/tree/master/" target="_blank" rel="noopener">mStream github repo</a></li>
-<li><a href="https://hub.docker.com/r/linuxserver/mstream" target="_blank" rel="noopener">mStream DockerHub</a></li>
+    <p>之前寫過<a href="https://www.phlinhng.com/passages/2020-03-17-caddy-static-file-server/">利用caddy與docker搭建靜態網頁服務器</a>，最近發現一個更美觀的靜態檔案服務器<a href="https://github.com/zeit/serve" target="_blank" rel="noopener">serve</a>，使用node實現。</p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM node:latest</span><br><span class="line"></span><br><span class="line">RUN mkdir -p &#x2F;root&#x2F;file</span><br><span class="line">WORKDIR &#x2F;root&#x2F;file</span><br><span class="line">RUN npm install serve</span><br></pre></td></tr></table></figure>
+<h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">file_server:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">./src/file_server</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/shared:/root/file</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">npx</span> <span class="string">serve</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">file</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<p>預設運作在port 5000，不好改。不過由於docker每個cotainer內部有自己的網絡，容器內部端口和別的container重複也不會影響使用。</p>
+<h3 id="Caddyfile"><a href="#Caddyfile" class="headerlink" title="Caddyfile"></a>Caddyfile</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">share.xxx.com &#123;</span><br><span class="line">    gzip</span><br><span class="line">    timeouts none</span><br><span class="line">    proxy / file_server:<span class="number">5000</span></span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Screeshot"><a href="#Screeshot" class="headerlink" title="Screeshot"></a>Screeshot</h2><p><img src="https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png" alt=""><br>source: <a href="https://github.com/zeit/serve" target="_blank" rel="noopener">https://github.com/zeit/serve</a></p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>發現這類靜態服務器的請求方式是GET，如果寫一個純文字檔存base64 vmess連結丟到共享文件夾裡就能當簡易訂閱API使用了。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://github.com/zeit/serve" target="_blank" rel="noopener">https://github.com/zeit/serve</a></li>
 </ul>
   </article>
   <aside class="table-content" id="site-toc">
@@ -218,7 +205,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特點"><span class="toc-text">特點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#界面圖"><span class="toc-text">界面圖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類似專案"><span class="toc-text">類似專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考連結"><span class="toc-text">參考連結</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation"><span class="toc-text">Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml"><span class="toc-text">docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caddyfile"><span class="toc-text">Caddyfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Screeshot"><span class="toc-text">Screeshot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#後記"><span class="toc-text">後記</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
@@ -227,7 +214,7 @@
       
         <div>
           原文鏈接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-20-mstream-personal-music-stream-server/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-03-21-static-file-server-nodejs/</a>
         </div>
       
       <div>
@@ -239,6 +226,8 @@
     <div class="passage-tags">
      
       <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/caddy/"><i class="fa fa-tags"></i>caddy</a>
      
       <a href="/tags/docker/"><i class="fa fa-tags"></i>docker</a>
     
@@ -305,10 +294,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-03-21-static-file-server-nodejs/" data-enable="true">
+    <a href="/passages/2020-03-21-rsync-command/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-03-20-serax-google-proxy/" data-enable="true">
+    <a href="/passages/2020-03-20-mstream-personal-music-stream-server/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
