@@ -183,7 +183,8 @@
   </h1>
   
   <article class="passage-article">
-    <h1 id="google-drive-ocamlfuse-配置"><a href="#google-drive-ocamlfuse-配置" class="headerlink" title="google-drive-ocamlfuse 配置"></a>google-drive-ocamlfuse 配置</h1><p>以下操作全部需要在root環境執行</p>
+    <p>我又在想辦法榨乾VPS小雞的性能了。之前寫過<a href="https://www.phlinhng.com/passages/2020-03-20-mstream-personal-music-stream-server/">mStream 建構個人音樂雲</a>，但是搬瓦工49.9美元CN2 GT套餐的硬盤只有20G，能放的歌曲數量有限。如果使用<a href="https://github.com/astrada/google-drive-ocamlfuse" target="_blank" rel="noopener">google-drive-ocamlfuse</a>掛Google Drive雲盤，就能利用Google Drive做為音樂存儲空間，還能達到代理谷歌雲盤，免翻牆聽歌的效果。</p>
+<h1 id="google-drive-ocamlfuse-配置"><a href="#google-drive-ocamlfuse-配置" class="headerlink" title="google-drive-ocamlfuse 配置"></a>google-drive-ocamlfuse 配置</h1><p>以下操作全部需要在root環境執行</p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>首先必須安裝google-drive-ocamlfuse（以下簡稱gfuse），由於gfuse的docker image很久沒維護了而且使用麻煩，這次採用直接安裝。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:alessandro-strada/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install google-drive-ocamlfuse</span><br></pre></td></tr></table></figure>
 <h2 id="申請-Google-Drive-API-amp-授權"><a href="#申請-Google-Drive-API-amp-授權" class="headerlink" title="申請 Google Drive API &amp; 授權"></a>申請 Google Drive API &amp; 授權</h2><p>到<a href="https://console.developers.google.com/apis" target="_blank" rel="noopener">Google APIs &amp; Services</a>搜索啟用<code>Google Drive API</code>，申請一個<code>其他</code>類型的<code>Oath2.0 Credential</code>，記下<code>Client ID</code>和<code>Client Secrets</code>。然後在VPS上執行以下指令</p>
