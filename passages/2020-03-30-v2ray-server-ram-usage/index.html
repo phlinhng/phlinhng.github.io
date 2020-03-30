@@ -200,13 +200,14 @@
 <h1 id="測試方法"><a href="#測試方法" class="headerlink" title="測試方法"></a>測試方法</h1><p>用三台終端依序連上同一台服務器，打開Youtube持續播放1080p視頻，模擬正常使用者行為，然後觀察GCP Console中內存的增加情形。這樣的測試方法很不嚴謹，不過我只想知道1G服務器能不能支持20人同時在線，所以測個大概就行。事實上大概10人同時連接，出口帶寬就爆了，如果測試結果1G內存的主機的理論最大連接終端數超過10人，應付日常翻牆己經綽綽有餘。</p>
 <h1 id="測試結果"><a href="#測試結果" class="headerlink" title="測試結果"></a>測試結果</h1><p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-03-30-v2ray-server-ram-usage/Screenshot_2020-03-30_at_2.49.39_AM_ofpwk0.png" alt=""><br>每多一個客戶終端連接，會增加<code>15-20MB</code>左右的內存佔用。以每個終端佔用20M計算，1G RAM扣掉Docker和Caddy佔去的480MB(圖中gcp0-tokyo的數值)，大概能承受25人同時在線。</p>
 <h1 id="增加連接數量的嘗試"><a href="#增加連接數量的嘗試" class="headerlink" title="增加連接數量的嘗試"></a>增加連接數量的嘗試</h1><h2 id="caddy"><a href="#caddy" class="headerlink" title="caddy"></a>caddy</h2><h3 id="將Caddy的docker-image換成alpine"><a href="#將Caddy的docker-image換成alpine" class="headerlink" title="將Caddy的docker image換成alpine"></a>將Caddy的docker image換成alpine</h3><p>既然每個終端佔用的內存是差不多的，如果能降低caddy的內存佔用，理論上就能挪出更多空間給v2Ray。因此我首先試著把原本裝在ubuntu image裡的docker換成alpine image，結果雖然container變小了，內存佔用並沒有減少。</p>
-<h3 id="更改Caddy的timeouts設置"><a href="#更改Caddy的timeouts設置" class="headerlink" title="更改Caddy的timeouts設置"></a>更改Caddy的timeouts設置</h3><p>根據<a href="https://caddy.community/t/caddy-memory-usage-over-300mb-any-clue/2351/3" target="_blank" rel="noopener">這篇</a>caddy官方社群的問答，得知使用cloudflare官方api和<code>tls.cloudflare</code>插件時，cloudflare緩存服務會持續與caddy連接，設置<code>timeouts{idle 5m}</code>可以解決。但我設置以後目前沒觀察到內存佔用減少。</p>
+<h3 id="更改Caddy的timeouts設置"><a href="#更改Caddy的timeouts設置" class="headerlink" title="更改Caddy的timeouts設置"></a>更改Caddy的timeouts設置</h3><p>根據<a href="https://caddy.community/t/caddy-memory-usage-over-300mb-any-clue/2351/3" target="_blank" rel="noopener">這篇</a>caddy官方社群的問答，得知使用cloudflare官方api和<code>tls.cloudflare</code>插件時，cloudflare緩存服務會持續與caddy連接，設置<code>timeouts{idle 5m}</code>可以解決。實測減少了30MB的內存佔用。</p>
 <h3 id="不用docker直接部署"><a href="#不用docker直接部署" class="headerlink" title="不用docker直接部署"></a>不用docker直接部署</h3><p>理論上可以減少一點內存佔用，但為了部署方便我選擇犧牲一點內存。</p>
 <h2 id="v2Ray-1"><a href="#v2Ray-1" class="headerlink" title="v2Ray"></a>v2Ray</h2><h3 id="更改v2Ray的AID-推荐"><a href="#更改v2Ray的AID-推荐" class="headerlink" title="更改v2Ray的AID (推荐)"></a>更改v2Ray的AID (推荐)</h3><p>v2Ray官方推薦的作法。將AID從<code>36</code>改成<code>6</code>之後，每個終端佔用的內存下降到<code>8-10M</code>，幾乎少了一半。大概的最大連接數從<code>25</code>人提升到<code>50</code>人，夠了。</p>
 <h3 id="更改v2Ray的bufferSize"><a href="#更改v2Ray的bufferSize" class="headerlink" title="更改v2Ray的bufferSize"></a>更改v2Ray的bufferSize</h3><p>現在v2Ray的內存佔用己經很低了，官方不再推薦修改bufferSize，而且bufferSize太低會影響上網體驗，想追求極限的朋友可以自己嘗試。</p>
 <h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><ol>
 <li>內存512MB的VPS不要用docker和caddy，直接用v2ray內置的ws+tls</li>
 <li>內存1024MB的機子可以放心用四件套，最多<strong>50人</strong>連沒問題</li>
+<li>用Cloudflare API需要設置timeouts，避免cf緩存服務器一直與你的caddy server連接又不斷開，佔用內存。</li>
 <li>比起內存，影響同時在線終端數量的瓶頸是帶寬，實際上<strong>10人</strong>左右就可能把服務器出口帶寬用完了（數字依出口帶寬大小而定）</li>
 <li>Alter ID對內存佔的影響十分顯著，官方建議值是16。實測AID 6時，每終端佔用服務器內存8-10M；AID 36時，每終端佔用服務器內存15-20M。個人建議在內存低的機器上不要設超過40。</li>
 <li>v2Ray對CPU要求不大，升級服務器配置時優先考慮升級內存</li>
