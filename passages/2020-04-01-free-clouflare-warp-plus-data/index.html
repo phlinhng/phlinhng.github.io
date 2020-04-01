@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="yQmYVCzuIkO-w6cPq-lU8GFEEcSDwqHfRmFIB9lTkTg" />
+  <meta name="author" content="phlinhng" />
+  
+  
+  <title>免費增加 Cloudflare WARP+ 流量 | Paper Hub</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="programming, web" />
+  
+
+  
+  <meta name="description" content="Cloudflare WARP+是良心企業Cloudflare推出的Wireguard代理WARP的付費版，每推薦一名新用戶安裝WARP可以獲得1G流量。利用yyuueexxiinngg寫的刷流量代碼可以直接獲得推薦流量。">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"13vc7SSrDX0ulA5s5njKbRg6-MdYXbMMI","appkey":"BcReDEPMaWVEYun7pVJCCioe","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2020-02-20",
+    passwords: [],
+    is_post: true,
+    lock: false,
+    author: "phlinhng",
+    share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  
+<script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+
+  
+    <link rel="icon" href="/images/cloudy.png">
+    <link rel="apple-touch-icon" href="/images/cloudy.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">PAPER HUB</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 無欲則剛</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首頁</a>
+      
+        <a href="/archives/" target="_self">歸檔</a>
+      
+        <a href="/tags/" target="_self">標籤</a>
+      
+        <a href="/categories/" target="_self">分類</a>
+      
+        <a href="/friends/" target="_self">友鏈</a>
+      
+        <a href="/about/" target="_self">關於</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/phlinhng/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>導航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首頁
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            歸檔
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            標籤
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分類
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友鏈
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            關於
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-04-01
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    免費增加 Cloudflare WARP+ 流量
+  </h1>
+  
+  <article class="passage-article">
+    <p><a href="https://warp.plus/Z6ZdB" target="_blank" rel="noopener">Cloudflare WARP+</a>是良心企業Cloudflare推出的Wireguard代理WARP的付費版，每推薦一名新用戶安裝WARP可以獲得1G流量。利用<a href="https://github.com/yyuueexxiinngg" target="_blank" rel="noopener">yyuueexxiinngg</a>寫的<a href="(https://github.com/yyuueexxiinngg/some-scripts/blob/master/cloudflare/cloudflare-warp-plus-aff.js">刷流量代碼</a>可以直接獲得推薦流量。    </p>
+<p>首先要找到自己的Referral Code，Android用戶直接在1.1.1.1設置裡找就有，iOS用戶需要用電腦連接<code>https://warp.plus/*</code>格式的推薦連接，然後用Netowork Tool抓API請求。    </p>
+<p>以下代碼均來自<a href="https://github.com/yyuueexxiinngg/some-scripts/tree/master/cloudflare" target="_blank" rel="noopener">yyuueexxiinngg/some-scripts</a></p>
+<h1 id="nodejs實現"><a href="#nodejs實現" class="headerlink" title="nodejs實現"></a>nodejs實現</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Fake register for referrer to get warp plus bandwidth</span><br><span class="line">const referrer &#x3D; &quot;YOUR REFERRER ID&quot;;</span><br><span class="line">const timesToLoop &#x3D; 10;</span><br><span class="line">const retryTimes &#x3D; 5;</span><br><span class="line">&#x2F;&#x2F; How many sec to sleep, currently rate limit might be apply to per min per ip from my observation.</span><br><span class="line">const sleepSeconds &#x3D; 60;</span><br><span class="line"></span><br><span class="line">const https &#x3D; require(&quot;https&quot;);</span><br><span class="line">const zlib &#x3D; require(&quot;zlib&quot;);</span><br><span class="line"></span><br><span class="line">async function init() &#123;</span><br><span class="line">  for (let i &#x3D; 0; i &lt; timesToLoop; i++) &#123;</span><br><span class="line">    if (await run()) &#123;</span><br><span class="line">      console.log(i + 1, &quot;OK&quot;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(i + 1, &#96;Error, will sleep for $&#123;sleepSeconds&#125;s&#96;);</span><br><span class="line">      for (let r &#x3D; 0; r &lt; retryTimes; r++) &#123;</span><br><span class="line">        await sleep(sleepSeconds * 1000);</span><br><span class="line">        if (await run()) &#123;</span><br><span class="line">          console.log(i + 1, &quot;Retry #&quot; + (r + 1), &quot;OK&quot;);</span><br><span class="line">          break;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          console.log(i + 1, &quot;Retry #&quot; + (r + 1), &#96;Error, will sleep for $&#123;sleepSeconds&#125;s&#96;);</span><br><span class="line">          if (r &#x3D;&#x3D;&#x3D; retryTimes - 1) &#123;</span><br><span class="line">            return;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async function run() &#123;</span><br><span class="line">  return new Promise(resolve &#x3D;&gt; &#123;</span><br><span class="line">    const install_id &#x3D; genString(11);</span><br><span class="line">    const postData &#x3D; JSON.stringify(&#123;</span><br><span class="line">      key: &#96;$&#123;genString(43)&#125;&#x3D;&#96;,</span><br><span class="line">      install_id: install_id,</span><br><span class="line">      fcm_token: &#96;$&#123;install_id&#125;:APA91b$&#123;genString(134)&#125;&#96;,</span><br><span class="line">      referrer: referrer,</span><br><span class="line">      warp_enabled: false,</span><br><span class="line">      tos: new Date().toISOString().replace(&quot;Z&quot;, &quot;+07:00&quot;),</span><br><span class="line">      type: &quot;Android&quot;,</span><br><span class="line">      locale: &quot;zh_CN&quot;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    const options &#x3D; &#123;</span><br><span class="line">      hostname: &quot;api.cloudflareclient.com&quot;,</span><br><span class="line">      port: 443,</span><br><span class="line">      path: &quot;&#x2F;v0a745&#x2F;reg&quot;,</span><br><span class="line">      method: &quot;POST&quot;,</span><br><span class="line">      headers: &#123;</span><br><span class="line">        &quot;Content-Type&quot;: &quot;application&#x2F;json&quot;,</span><br><span class="line">        Host: &quot;api.cloudflareclient.com&quot;,</span><br><span class="line">        Connection: &quot;Keep-Alive&quot;,</span><br><span class="line">        &quot;Accept-Encoding&quot;: &quot;gzip&quot;,</span><br><span class="line">        &quot;User-Agent&quot;: &quot;okhttp&#x2F;3.12.1&quot;,</span><br><span class="line">        &quot;Content-Length&quot;: postData.length</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    const req &#x3D; https.request(options, res &#x3D;&gt; &#123;</span><br><span class="line">      if(res.statusCode &#x3D;&#x3D;&#x3D; 429) &#123;</span><br><span class="line">        &#x2F;&#x2F; Too many requests</span><br><span class="line">        resolve(false);</span><br><span class="line">      &#125;</span><br><span class="line">      const gzip &#x3D; zlib.createGunzip();</span><br><span class="line">      &#x2F;&#x2F; const buffer &#x3D; [];</span><br><span class="line">      res.pipe(gzip);</span><br><span class="line">      gzip</span><br><span class="line">        .on(&quot;data&quot;, function(data) &#123;</span><br><span class="line">          &#x2F;&#x2F; buffer.push(data.toString());</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(&quot;end&quot;, function() &#123;</span><br><span class="line">          &#x2F;&#x2F; console.dir(JSON.parse(buffer.join(&quot;&quot;)));</span><br><span class="line">          resolve(true);</span><br><span class="line">        &#125;)</span><br><span class="line">        .on(&quot;error&quot;, function(e) &#123;</span><br><span class="line">          &#x2F;&#x2F; console.error(e);</span><br><span class="line">          resolve(false);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    req.on(&quot;error&quot;, error &#x3D;&gt; &#123;</span><br><span class="line">      &#x2F;&#x2F; console.error(error);</span><br><span class="line">      resolve(false);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    req.write(postData);</span><br><span class="line">    req.end();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sleep(ms) &#123;</span><br><span class="line">  return new Promise(resolve &#x3D;&gt; setTimeout(resolve, ms));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function genString(length) &#123;</span><br><span class="line">  &#x2F;&#x2F; https:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;1349426&#x2F;11860316</span><br><span class="line">  let result &#x3D; &quot;&quot;;</span><br><span class="line">  const characters &#x3D; &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;</span><br><span class="line">  const charactersLength &#x3D; characters.length;</span><br><span class="line">  for (let i &#x3D; 0; i &lt; length; i++) &#123;</span><br><span class="line">    result +&#x3D; characters.charAt(Math.floor(Math.random() * charactersLength));</span><br><span class="line">  &#125;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">init();</span><br></pre></td></tr></table></figure>
+
+<h1 id="python實現"><a href="#python實現" class="headerlink" title="python實現"></a>python實現</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">referrer = <span class="string">"YOUR REFERRER ID"</span></span><br><span class="line">timesToLoop = <span class="number">10</span></span><br><span class="line">retryTimes = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">genString</span><span class="params">(stringLength)</span>:</span></span><br><span class="line">    letters = string.ascii_letters + string.digits</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(random.choice(letters) <span class="keyword">for</span> i <span class="keyword">in</span> range(stringLength))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://api.cloudflareclient.com/v0a745/reg'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    install_id = genString(<span class="number">11</span>)</span><br><span class="line">    body = &#123;<span class="string">"key"</span>: <span class="string">"&#123;&#125;="</span>.format(genString(<span class="number">42</span>)),</span><br><span class="line">            <span class="string">"install_id"</span>: install_id,</span><br><span class="line">            <span class="string">"fcm_token"</span>: <span class="string">"&#123;&#125;:APA91b&#123;&#125;"</span>.format(install_id, genString(<span class="number">134</span>)),</span><br><span class="line">            <span class="string">"referrer"</span>: referrer,</span><br><span class="line">            <span class="string">"warp_enabled"</span>: <span class="literal">False</span>,</span><br><span class="line">            <span class="string">"tos"</span>: datetime.datetime.now().isoformat()[:<span class="number">-3</span>] + <span class="string">"+07:00"</span>,</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"Android"</span>,</span><br><span class="line">            <span class="string">"locale"</span>: <span class="string">"zh-CN"</span>&#125;</span><br><span class="line"></span><br><span class="line">    bodyString = json.dumps(body)</span><br><span class="line"></span><br><span class="line">    headers = &#123;<span class="string">'Content-Type'</span>: <span class="string">'application/json; charset=UTF-8'</span>,</span><br><span class="line">               <span class="string">'Host'</span>: <span class="string">'api.cloudflareclient.com'</span>,</span><br><span class="line">               <span class="string">'Connection'</span>: <span class="string">'Keep-Alive'</span>,</span><br><span class="line">               <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip'</span>,</span><br><span class="line">               <span class="string">'User-Agent'</span>: <span class="string">'okhttp/3.12.1'</span></span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">    r = requests.post(url, data=bodyString, headers=headers)</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(timesToLoop):</span><br><span class="line">    result = run()</span><br><span class="line">    <span class="keyword">if</span> result.status_code == <span class="number">200</span>:</span><br><span class="line">        print(i + <span class="number">1</span>, <span class="string">"OK"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(i + <span class="number">1</span>, <span class="string">"Error"</span>)</span><br><span class="line">        <span class="keyword">for</span> r <span class="keyword">in</span> range(retryTimes):</span><br><span class="line">            retry = run()</span><br><span class="line">            <span class="keyword">if</span> retry.status_code == <span class="number">200</span>:</span><br><span class="line">                print(i + <span class="number">1</span>, <span class="string">"Retry #"</span> + str(r + <span class="number">1</span>), <span class="string">"OK"</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(i + <span class="number">1</span>, <span class="string">"Retry #"</span> + str(r + <span class="number">1</span>), <span class="string">"Error"</span>)</span><br><span class="line">                <span class="keyword">if</span> r == retryTimes - <span class="number">1</span>:</span><br><span class="line">                    exit()</span><br></pre></td></tr></table></figure>
+
+<h1 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h1><p>這個代碼在寫文章的當下(2020-04-01)還能用，此方法隨時有可能被Cloudflare封堵而失效，薅羊毛要快。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://github.com/yyuueexxiinngg/some-scripts/tree/master/cloudflare" target="_blank" rel="noopener">https://github.com/yyuueexxiinngg/some-scripts/tree/master/cloudflare</a></li>
+<li><a href="https://www.mfzy.cf/archives/121" target="_blank" rel="noopener">https://www.mfzy.cf/archives/121</a></li>
+</ul>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nodejs實現"><span class="toc-text">nodejs實現</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python實現"><span class="toc-text">python實現</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事項"><span class="toc-text">注意事項</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-04-01-free-clouflare-warp-plus-data/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已穩定運行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位訪客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: admin[AT]phlinhng.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <div class="site-layer-input-choose">
+          <a href="javascript:void(0);" title="Change Search Engine">Google</a>
+        </div>
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/2020-04-01-v2ray-caddy-cf-script/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159188335-1"></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159188335-1');
+  </script>
+
+
+
+
+
+
+    
+  </body>
+</html>
