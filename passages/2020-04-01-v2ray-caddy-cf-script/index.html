@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="v2ray,linux,shell script,bash script," />
   
 
   
@@ -194,7 +194,7 @@
 <h1 id="使用脚本"><a href="#使用脚本" class="headerlink" title="使用脚本"></a>使用脚本</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh \ &amp;&amp; chmod +x v2.sh \ &amp;&amp; ./v2.sh [domain] [path] [cloudflare email] [cloudflare api key]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>domain</code>: VPS子域名 (“<a href="http://www.yourdomain.com&quot;" target="_blank" rel="noopener">www.yourdomain.com&quot;</a>)</li>
-<li><code>path</code>: v2Ray的ws路径 (“/yourpath”)</li>
+<li><code>path</code>: v2Ray的ws路径 (“yourpath”)</li>
 <li><code>cloudflare email</code>: cf帐号 (“<a href="mailto:johndoe@gmail.com">johndoe@gmail.com</a>“)</li>
 <li><code>cloudflare api key</code>: cf Global API Key (“a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3”)<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh \ &amp;&amp; chmod +x v2.sh \ &amp;&amp; ./v2.sh <span class="string">"yourpath"</span> <span class="string">"johndoe@gmail.com"</span> <span class="string">"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"</span></span><br></pre></td></tr></table></figure>
 安装完成后会生成以下信息，填入客户端即可使用 (UUID为随机生成，每次皆不同；Alter ID默认为6)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Address: www.yourdomain.com</span><br><span class="line">Port: 443</span><br><span class="line">UUID: 13FB0A64-3BC8-4574-8D49-7121B04BDE83</span><br><span class="line">Alter ID: 6</span><br><span class="line">Type: websocket</span><br><span class="line">Hostname: www.yourdomain.com</span><br><span class="line">Path: &#x2F;yourpath</span><br><span class="line"></span><br><span class="line">vmess:&#x2F;&#x2F;eyJhZGQiOiJhYmMuY29tIiwiYWlkIjoiMzYiLCJob3N0IjoiYWJjLmNvbSIsImlkIjoiRDA0RTczODEtN0Y5Qi00OEYyLTg2QzMtOTQwRjBCNTQ3MEEwIiwibmV0Ijoid3MiLCJwYXRoIjoiL2FiYyIsInBvcnQiOiI0NDMiLCJwcyI6ImFiYy5jb206NDQzIiwidGxzIjoidGxzIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9Cg&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
@@ -225,6 +225,18 @@
       </div>
     </aside>
   
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/v2ray/"><i class="fa fa-tags"></i>v2ray</a>
+     
+      <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
+     
+      <a href="/tags/shell-script/"><i class="fa fa-tags"></i>shell script</a>
+     
+      <a href="/tags/bash-script/"><i class="fa fa-tags"></i>bash script</a>
+    
+    </div>
   
 </div>
 
