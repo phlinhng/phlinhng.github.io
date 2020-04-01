@@ -7,7 +7,7 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title> | 第3页 | Paper Hub</title>
+  <title>v2Ray四件套(ws+tls+caddy+cdn)纯净一键安装脚本 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="写了一个基于v2Ray官方脚本和caddy安装脚本的纯净一键安装脚本，集成Cloudflare API，不需要手动开关云朵也能申请证书。https://github.com/phlinhng/v2ray-caddy-cf">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,133 +165,80 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="home">
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-04-01
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    v2Ray四件套(ws+tls+caddy+cdn)纯净一键安装脚本
+  </h1>
   
-    <div class="home-article-wrapper clearfix">
-      <div class="home-article" data-cover="false">
-        <div class="home-article-inner" data-cover="false">
-          <div class="passage-meta">
-            <span>
-              <i class="fa fa-calendar"></i>2020-02-26
-            </span>
-            
-            
-              <span>
-                | <i class="fa fa-unlock-alt"></i>UNLOCK
-              </span>
-            
-          </div>
-          <h1 class="home-article-title">
-            <a href="/passages/2020-02-26-wsl-install-change-source-md/">WSL2安裝Debian(Ubuntu)並更換國內apt源</a>
-          </h1>
-          <div class="home-article-content passage-article">
-            
-              <p>本文記錄在Windows10上開啟WSL2、安裝Debian 10並更換apt源為國內源的過程。</p>
-            
-          </div>
-          <a class="home-article-read" href="/passages/2020-02-26-wsl-install-change-source-md/">
-            READ MORE >>>
-          </a>
-          
-            <div class="passage-tags">
-             
-              <a href="/tags/wsl/"><i class="fa fa-tags"></i>wsl</a>
-             
-              <a href="/tags/ubuntu/"><i class="fa fa-tags"></i>ubuntu</a>
-             
-              <a href="/tags/debian/"><i class="fa fa-tags"></i>debian</a>
-             
-              <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
-            
-            </div>
-          
-        </div>
-        
-      </div>
-    </div>
+  <article class="passage-article">
+    <p>写了一个基于v2Ray官方脚本和caddy安装脚本的纯净一键安装脚本，集成Cloudflare API，不需要手动开关云朵也能申请证书。</p>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/phlinhng/v2ray-caddy-cf" target="_blank" rel="noopener">https://github.com/phlinhng/v2ray-caddy-cf</a></p>
+<h1 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h1><ol>
+<li>将域名交由Cloudflare解析，并将要绑定v2Ray的子域名解析到VPS IP</li>
+<li>云朵有没有点亮都无所谓，不影响申请证书</li>
+<li>准备好<a href="ttps://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys">Cloudflare Global API Key</a></li>
+<li>Debian或Ubuntu系统 (CentOS不适用)</li>
+</ol>
+<h1 id="使用脚本"><a href="#使用脚本" class="headerlink" title="使用脚本"></a>使用脚本</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh \ &amp;&amp; chmod +x v2.sh \ &amp;&amp; ./v2.sh [domain] [path] [cloudflare email] [cloudflare api key]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>domain</code>: VPS子域名 (“<a href="http://www.yourdomain.com&quot;" target="_blank" rel="noopener">www.yourdomain.com&quot;</a>)</li>
+<li><code>path</code>: v2Ray的ws路径 (“/yourpath”)</li>
+<li><code>cloudflare email</code>: cf帐号 (“<a href="mailto:johndoe@gmail.com">johndoe@gmail.com</a>“)</li>
+<li><code>cloudflare api key</code>: cf Global API Key (“a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3”)<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh \ &amp;&amp; chmod +x v2.sh \ &amp;&amp; ./v2.sh <span class="string">"yourpath"</span> <span class="string">"johndoe@gmail.com"</span> <span class="string">"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"</span></span><br></pre></td></tr></table></figure>
+安装完成后会生成以下信息，填入客户端即可使用 (UUID为随机生成，每次皆不同；Alter ID默认为6)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Address: www.yourdomain.com</span><br><span class="line">Port: 443</span><br><span class="line">UUID: 13FB0A64-3BC8-4574-8D49-7121B04BDE83</span><br><span class="line">Alter ID: 6</span><br><span class="line">Type: websocket</span><br><span class="line">Hostname: www.yourdomain.com</span><br><span class="line">Path: &#x2F;yourpath</span><br><span class="line"></span><br><span class="line">vmess:&#x2F;&#x2F;eyJhZGQiOiJhYmMuY29tIiwiYWlkIjoiMzYiLCJob3N0IjoiYWJjLmNvbSIsImlkIjoiRDA0RTczODEtN0Y5Qi00OEYyLTg2QzMtOTQwRjBCNTQ3MEEwIiwibmV0Ijoid3MiLCJwYXRoIjoiL2FiYyIsInBvcnQiOiI0NDMiLCJwcyI6ImFiYy5jb206NDQzIiwidGxzIjoidGxzIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9Cg&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+如果信息填写错误造成四件套启动不成功，用正确的信息重新執行一次脚本即可。</li>
+</ul>
+<h1 id="Docker版"><a href="#Docker版" class="headerlink" title="Docker版"></a><a href="https://github.com/phlinhng/v2ray-caddy-cf/tree/docker" target="_blank" rel="noopener">Docker版</a></h1>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目地址"><span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前置条件"><span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用脚本"><span class="toc-text">使用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#范例"><span class="toc-text">范例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker版"><span class="toc-text">Docker版</span></a></li></ol>
+  </div>
+</aside>
   
-    <div class="home-article-wrapper clearfix">
-      <div class="home-article" data-cover="false">
-        <div class="home-article-inner" data-cover="false">
-          <div class="passage-meta">
-            <span>
-              <i class="fa fa-calendar"></i>2020-02-26
-            </span>
-            
-            
-              <span>
-                | <i class="fa fa-unlock-alt"></i>UNLOCK
-              </span>
-            
-          </div>
-          <h1 class="home-article-title">
-            <a href="/passages/2020-02-26-created-site-md/">創站</a>
-          </h1>
-          <div class="home-article-content passage-article">
-            
-              <p>其實從2019年開始一直有自己建blog的念頭，因為那時候發現大陸厲害的程序員都喜歡自己架站，不過那時候寫代碼的功力還很菜就一直懶得弄。    </p>
-            
-          </div>
-          <a class="home-article-read" href="/passages/2020-02-26-created-site-md/">
-            READ MORE >>>
-          </a>
-          
-            <div class="passage-tags">
-             
-              <a href="/tags/github-pages/"><i class="fa fa-tags"></i>github pages</a>
-             
-              <a href="/tags/hexo/"><i class="fa fa-tags"></i>hexo</a>
-             
-              <a href="/tags/personal-domain/"><i class="fa fa-tags"></i>personal domain</a>
-            
-            </div>
-          
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-04-01-v2ray-caddy-cf-script/</a>
         </div>
-        
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
       </div>
-    </div>
+    </aside>
   
-    <div class="home-article-wrapper clearfix">
-      <div class="home-article" data-cover="false">
-        <div class="home-article-inner" data-cover="false">
-          <div class="passage-meta">
-            <span>
-              <i class="fa fa-calendar"></i>2020-02-20
-            </span>
-            
-            
-              <span>
-                | <i class="fa fa-lock"></i>LOCK
-              </span>
-            
-          </div>
-          <h1 class="home-article-title">
-            <a href="/passages/2020-02-20-hello-world/">Hello World</a>
-          </h1>
-          <div class="home-article-content passage-article">
-            
-              
-            
-          </div>
-          <a class="home-article-read" href="/passages/2020-02-20-hello-world/">
-            READ MORE >>>
-          </a>
-          
-            <div class="passage-tags">
-             
-              <a href="/tags/hexo/"><i class="fa fa-tags"></i>hexo</a>
-             
-              <a href="/tags/locked/"><i class="fa fa-tags"></i>locked</a>
-            
-            </div>
-          
-        </div>
-        
-      </div>
-    </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -340,19 +287,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/page/2/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2020-03-30-v2ray-server-ram-usage/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
