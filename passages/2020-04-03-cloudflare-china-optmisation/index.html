@@ -190,9 +190,9 @@
 <p>*填1-254都可以，不影響效果。由於Cloudflare採用Anycast (任播) 技術，同一段地址的每個IP都是入口，Cloudflare會自己轉發到同IP段的任意主機上。</p>
 <h1 id="DNS智能分流設置"><a href="#DNS智能分流設置" class="headerlink" title="DNS智能分流設置"></a>DNS智能分流設置</h1><p>因為不想用CF Partner接入，我選擇另外注冊一個域名(<code>CF分流域名</code>)用DNSLA的智能DNS三網分流接入不同節點。將v2Ray客戶端的Address改為另外注冊的CF分流域名，WS路徑寫原本v2Ray域名即可連接。DNSLA免費版可以為一個域名設置四個規則（只有默認、國內、海外、電信、聯通、移動可以選，付費版能添加基於地域的規則），我用的規則如下。</p>
 <blockquote>
-<p><strong>默認: cloudflare.com</strong><br><strong>國內: 1.0.0.*</strong><br><strong>移動: 172.64.32.*</strong><br><strong>聯通: 104.16.80.*</strong></p>
+<p><strong>默認: cloudflare.com</strong><br><strong>電信: 172.64.0.*</strong><br><strong>移動: 172.64.32.*</strong><br><strong>聯通: 104.16.80.*</strong></p>
 </blockquote>
-<p>移動走172.64.32.* (香港)，聯通走104.16.80.* (San Francisco)，電信和國內其他網絡走1.0.0.*，海外就走默認的cloudflare.com。本來參考網絡上其他節點優化的文章，電信用的是百度雲加速合作節點(全國平均ping 190ms)，後來發現172.64.0.*和1.0.0.*延遲更低，大約在170ms。172.64.0.*在台灣用Hinet連不上，所以國內選用全國都連得上的1.0.0.*。</p>
+<p>移動走172.64.32.* (香港)，聯通走104.16.80.* (San Francisco)，電信走1.0.0.*，海外和國內其他網絡就走默認的cloudflare.com。本來參考網絡上其他節點優化的文章，電信用的是百度雲加速合作節點(全國平均ping 190ms)，後來發現172.64.0.*和1.0.0.*延遲更低，大約在170ms。</p>
 <h1 id="效果比較"><a href="#效果比較" class="headerlink" title="效果比較"></a>效果比較</h1><p>測試時間: 2020-04-03 9:00AM</p>
 <h2 id="免費版節點"><a href="#免費版節點" class="headerlink" title="免費版節點"></a>免費版節點</h2><p>全球平均260ms，全國平均300ms以上。<br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_8.51.52_AM_fiebff.png" alt=""></p>
 <h2 id="Cloudflare與百度雲合作節點"><a href="#Cloudflare與百度雲合作節點" class="headerlink" title="Cloudflare與百度雲合作節點"></a>Cloudflare與百度雲合作節點</h2><p>全球平均200ms，全國平均220ms。百度雲合作節點己經不好用了。<br><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_9.05.53_AM_fwcpq7.png" alt=""></p>
