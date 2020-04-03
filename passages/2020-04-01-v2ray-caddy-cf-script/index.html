@@ -188,10 +188,10 @@
 <h1 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h1><ol>
 <li>将域名交由Cloudflare解析，并将要绑定v2Ray的子域名解析到VPS IP</li>
 <li>云朵有没有点亮都无所谓，不影响申请证书</li>
-<li>准备好<a href="ttps://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys">Cloudflare Global API Key</a></li>
+<li>准备好<a href="https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys" target="_blank" rel="noopener">Cloudflare Global API Key</a></li>
 <li>Debian或Ubuntu系统 (CentOS不适用)</li>
 </ol>
-<h1 id="使用脚本"><a href="#使用脚本" class="headerlink" title="使用脚本"></a>使用脚本</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh \ &amp;&amp; chmod +x v2.sh \ &amp;&amp; ./v2.sh [domain] [path] [cloudflare email] [cloudflare api key]</span><br></pre></td></tr></table></figure>
+<h1 id="使用脚本"><a href="#使用脚本" class="headerlink" title="使用脚本"></a>使用脚本</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/phlinhng/v2ray-caddy-cf/master/v2.sh &amp;&amp; chmod +x v2.sh &amp;&amp; ./v2.sh [domain] [path] [cloudflare email] [cloudflare api key]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>domain</code>: VPS子域名 (“<a href="http://www.yourdomain.com&quot;" target="_blank" rel="noopener">www.yourdomain.com&quot;</a>)</li>
 <li><code>path</code>: v2Ray的ws路径 (“yourpath”)</li>
