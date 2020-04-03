@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="yQmYVCzuIkO-w6cPq-lU8GFEEcSDwqHfRmFIB9lTkTg" />
+  <meta name="author" content="phlinhng" />
+  
+  
+  <title>Cloudflare 三網友好節點 大陸連接優化 | Paper Hub</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="cloudflare,dns," />
+  
+
+  
+  <meta name="description" content="使用Cloudflare的好處有啥想必不用多說，但是Cloudflare免費版分配的節點在大陸往往不是最快的。透過手動輸入節點IP的方式可以選擇較為快速的節點，加速v2Ray連接。">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"13vc7SSrDX0ulA5s5njKbRg6-MdYXbMMI","appkey":"BcReDEPMaWVEYun7pVJCCioe","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2020-02-20",
+    passwords: [],
+    is_post: true,
+    lock: false,
+    author: "phlinhng",
+    share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  
+<script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+
+  
+    <link rel="icon" href="/images/cloudy.png">
+    <link rel="apple-touch-icon" href="/images/cloudy.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">PAPER HUB</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 無欲則剛</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首頁</a>
+      
+        <a href="/archives/" target="_self">歸檔</a>
+      
+        <a href="/tags/" target="_self">標籤</a>
+      
+        <a href="/categories/" target="_self">分類</a>
+      
+        <a href="/friends/" target="_self">友鏈</a>
+      
+        <a href="/about/" target="_self">關於</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/phlinhng/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>導航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首頁
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            歸檔
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            標籤
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分類
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友鏈
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            關於
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-04-03
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Cloudflare 三網友好節點 大陸連接優化
+  </h1>
+  
+  <article class="passage-article">
+    <p>使用Cloudflare的好處有啥想必不用多說，但是Cloudflare免費版分配的節點在大陸往往不是最快的。透過手動輸入節點IP的方式可以選擇較為快速的節點，加速v2Ray連接。</p>
+<h1 id="三網友好節點"><a href="#三網友好節點" class="headerlink" title="三網友好節點"></a>三網友好節點</h1><ul>
+<li>三網友好: <strong>1.0.0.*</strong></li>
+<li>移動: <strong>172.64.32.*</strong> (香港)</li>
+<li>聯通: <strong>104.16.80.*</strong> (San Francisco) 或 <strong>104.16.160.*</strong> (San Jose)</li>
+<li>電信: <strong>172.64.0.*</strong> 或 <strong>1.0.0.*</strong></li>
+<li>百度雲加速合作節點: <strong>162.159.[208-211].[4-103]</strong></li>
+</ul>
+<p>*填1-254都可以，不影響效果。由於Cloudflare採用Anycast (任播) 技術，同一段地址的每個IP都是入口，Cloudflare會自己轉發到同IP段的任意主機上。</p>
+<h1 id="DNS智能分流設置"><a href="#DNS智能分流設置" class="headerlink" title="DNS智能分流設置"></a>DNS智能分流設置</h1><p>因為不想用CF Partner接入，我選擇另外注冊一個域名(<code>CF分流域名</code>)用DNSLA的智能DNS三網分流接入不同節點。將v2Ray客戶端的Address改為另外注冊的CF分流域名，WS路徑寫原本v2Ray域名即可連接。DNSLA免費版可以為一個域名設置四個規則（只有默認、國內、海外、電信、聯通、移動可以選，付費版能添加基於地域的規則），我用的規則如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">默認: cloudflare.com</span><br><span class="line">國內: 1.0.0.*</span><br><span class="line">移動: 172.64.32.*</span><br><span class="line">聯通: 104.16.80.*</span><br></pre></td></tr></table></figure>
+<p>移動走172.64.32.* (香港)，聯通走104.16.80.* (San Francisco)，電信和國內其他網絡走1.0.0.<em>，海外就走默認的cloudflare.com。本來參考網絡上其他節點優化的文章，電信用的是百度雲加速合作節點(全國平均ping 190ms)，後來發現`172.64.0.</em><code>和</code>1.0.0.<em><code>延遲更低，大約在170ms。</code>172.64.0.</em><code>在台灣用Hinet連不上，所以國內選用全國都連得上的</code>1.0.0.*`。</p>
+<h1 id="效果比較"><a href="#效果比較" class="headerlink" title="效果比較"></a>效果比較</h1><p>測試時間: 2020-04-03 9:00AM</p>
+<h2 id="免費版節點"><a href="#免費版節點" class="headerlink" title="免費版節點"></a>免費版節點</h2><p>全球平均260ms，全國平均300ms以上。<br>!()<a href="/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_8.51.52_AM_fiebff.png">img0</a></p>
+<h2 id="Cloudflare與百度雲合作節點"><a href="#Cloudflare與百度雲合作節點" class="headerlink" title="Cloudflare與百度雲合作節點"></a>Cloudflare與百度雲合作節點</h2><p>!()<a href="/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_9.05.53_AM_fwcpq7.png">img1</a></p>
+<h2 id="DNS智能分流"><a href="#DNS智能分流" class="headerlink" title="DNS智能分流"></a>DNS智能分流</h2><p>!()<a href="/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_8.59.26_AM_dbd8pk.png">img2</a></p>
+<h2 id="1-0-0"><a href="#1-0-0" class="headerlink" title="1.0.0.*"></a>1.0.0.*</h2><p>!()<a href="/images/2020-04-03-cloudflare-china-optmisation/Screenshot_2020-04-03_at_8.54.00_AM_wd4be3.png">img3</a></p>
+<p>顯而易見，三網分流的結果和1.0.0.*差不多，不想折騰的朋友可以直接考慮這組。</p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#三網友好節點"><span class="toc-text">三網友好節點</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS智能分流設置"><span class="toc-text">DNS智能分流設置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果比較"><span class="toc-text">效果比較</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#免費版節點"><span class="toc-text">免費版節點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloudflare與百度雲合作節點"><span class="toc-text">Cloudflare與百度雲合作節點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS智能分流"><span class="toc-text">DNS智能分流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-0-0"><span class="toc-text">1.0.0.*</span></a></li></ol></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-04-03-cloudflare-china-optmisation/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/cloudflare/"><i class="fa fa-tags"></i>cloudflare</a>
+     
+      <a href="/tags/dns/"><i class="fa fa-tags"></i>dns</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已穩定運行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位訪客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: admin[AT]phlinhng.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <div class="site-layer-input-choose">
+          <a href="javascript:void(0);" title="Change Search Engine">Google</a>
+        </div>
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/2020-04-01-free-clouflare-warp-plus-data/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159188335-1"></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159188335-1');
+  </script>
+
+
+
+
+
+
+    
+  </body>
+</html>
