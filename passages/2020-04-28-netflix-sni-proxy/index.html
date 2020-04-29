@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="今天該寫自辯期末論文不好好寫跑去搞Netflix解鎖，還把放在老家搭梯子的Pi 4搞到失聯了，著此文以記。">
+  <meta name="description" content="今天該寫自辯期末論文不好好寫跑去搞Netflix解鎖未遂，還把放在老家搭梯子的Pi 4搞到失聯了，著此文以記。">
 
   
 
@@ -187,14 +187,14 @@
 <h1 id="何謂流媒體解鎖"><a href="#何謂流媒體解鎖" class="headerlink" title="何謂流媒體解鎖"></a>何謂流媒體解鎖</h1><p>以Netflix為首的各國串流媒體因為版權的關係通常不讓用戶通過VPN來跨國訪問不同地區的服務（例如在美國沒法看日區的影片），所以對主流IDC的IP段做了限制。用一般VPS搭建的梯子是不能直接看Netflix的，需要透過沒被封鎖的IP來解鎖觀看限制。</p>
 <h1 id="流媒體解鎖方式"><a href="#流媒體解鎖方式" class="headerlink" title="流媒體解鎖方式"></a>流媒體解鎖方式</h1><p>假設能看NF的VPS為VPS1（奈飛機），不能看NF的VPS為VPS2（非奈飛機）。我們希望VPS2透過VPS1解鎖Netflix，可以用兩種方法。</p>
 <h2 id="1-代理轉發"><a href="#1-代理轉發" class="headerlink" title="1. 代理轉發"></a>1. 代理轉發</h2><p>在VPS1上設置一個代理（例如Shadowsock），設定VPS2的路由規則將所有Netflix流量轉發到VPS1，NF就會認為是VPS1在訪問它。簡單的說就是把VPS1當成VPS2的梯子去翻越Netflix設下的資本主義高牆。觀看Netflix時會同時消耗VPS1和VPS2的流量。</p>
-<h2 id="2-DNS解鎖（DNS劫持-反向代理）"><a href="#2-DNS解鎖（DNS劫持-反向代理）" class="headerlink" title="2. DNS解鎖（DNS劫持 + 反向代理）"></a>2. DNS解鎖（DNS劫持 + 反向代理）</h2><p>網上最常見的DNS解鎖教程就是用<a href="https://github.com/ab77/netflix-proxy" target="_blank" rel="noopener">ab77/netflix-proxy</a>項目搭建一個用於解鎖流媒體的DNS服務器+SNI Proxy。首先將VPS2的DNS指向VPS1上的DNS Server，VPS1收到一般的域名請求會返回正常的結果，收到Netflix或其他流媒體的域名會反回VPS1的IP，VPS2收到那個IP後便會誤以為VPS1就是Netflix的服務器並向它建立連接，這時VPS1會將VPS2的流量代理到真正的Netflix的服務器。<strong>觀看Netflix時會同時消耗VPS1和VPS2的流量。</strong></p>
+<h2 id="2-DNS解鎖（DNS劫持-反向代理）"><a href="#2-DNS解鎖（DNS劫持-反向代理）" class="headerlink" title="2. DNS解鎖（DNS劫持 + 反向代理）"></a>2. DNS解鎖（DNS劫持 + 反向代理）</h2><p>網上最常見的DNS解鎖教程就是用<a href="https://github.com/ab77/netflix-proxy" target="_blank" rel="noopener">ab77/netflix-proxy</a>項目搭建一個用於解鎖流媒體的DNS服務器+SNI Proxy。首先將VPS2的DNS指向VPS1上的DNS Server，VPS1收到一般的域名請求會返回正常的結果，收到Netflix或其他流媒體的域名會返回VPS1的IP，VPS2收到那個IP後便會誤以為VPS1就是Netflix的服務器並向它建立連接，這時VPS1會將VPS2的流量代理到真正的Netflix的服務器。<strong>觀看Netflix時會同時消耗VPS1和VPS2的流量。</strong></p>
 <h1 id="DNS解鎖的坑"><a href="#DNS解鎖的坑" class="headerlink" title="DNS解鎖的坑"></a>DNS解鎖的坑</h1><p>代理轉發和DNS解鎖本質上都是利用奈飛機代理非奈飛機的奈飛請求，而且觀看時會同時消耗兩台主機的流量。除了本質上沒什麼不同以外，DNS解鎖還有幾個坑。</p>
 <ol>
 <li>一定要通過Docker安裝，還會亂改服務器的iptables規則</li>
 <li>DNS解鎖代理會佔用80,443,53端口，沒辦法和v2Ray三件套代理共存，若兩者要共存其中一方必須改端口，任何一方不在443端口上運作都不能發揮原本的功能或效果。一台奈飛機如果要做DNS解鎖就沒法做v2Ray三件套梯子。</li>
 <li><del>ubuntu用<code>sudo reboot</code>會導致服務器再也開不起來</del></li>
 <li>如果沒限制來源IP，DNS解鎖的IP一但泄露則全世界任何設備都能用它來看Netflix，全世界都能蹭奈飛機的流量。</li>
-<li>DNS解鎖和代理轉發相同，都會消耗奈飛機的流量，都透過奈飛機代理，速度瓶頸都取決於奈飛機。不要被DNS解鎖<del>資本主義的糖衣</del>的名稱給騙了，它就是個花式梯子不是什麼黑科技。</li>
+<li>DNS解鎖和代理轉發相同，都透過奈飛機代理，速度瓶頸都取決於奈飛機，都會消耗奈飛機的流量。不要被DNS解鎖<del>資本主義的糖衣</del>的名稱給騙了，它就是個花式梯子不是什麼黑科技。</li>
 </ol>
 <h1 id="DNS解鎖的優點"><a href="#DNS解鎖的優點" class="headerlink" title="DNS解鎖的優點"></a>DNS解鎖的優點</h1><p>真要說DNS解鎖有什麼優點的話</p>
 <ol>
