@@ -12,11 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="linux,netplan," />
   
 
   
-  <meta name="description" content="前一篇關於奈飛DNS解鎖的文章中提到，我在執行reboot指令後，在家中的樹莓派突然失聯了，因此這次回家修復後我做了幾個預防措施，避免日後再次發生同樣的事故。">
+  <meta name="description" content="前一篇關於奈飛DNS解鎖的文章中提到，我在執行reboot指令後，家中的樹莓派突然失聯了。這次回家修復後我做了幾個預防措施，避免日後再次發生同樣的事故。">
 
   
 
@@ -183,8 +183,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>前一篇關於<a href="passages/2020-04-28-netflix-sni-proxy/">奈飛DNS解鎖的文章</a>中提到，我在執行<code>reboot</code>指令後，在家中的樹莓派突然失聯了，因此這次回家修復後我做了幾個預防措施，避免日後再次發生同樣的事故。以下操作均是在重裝系統後進行的。</p>
-<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="1-保持默認ssh端口"><a href="#1-保持默認ssh端口" class="headerlink" title="1. 保持默認ssh端口"></a>1. 保持默認ssh端口</h3><p>為了避免重開機後自定義端口的設置沒有生效，這次我讓ssh保持默認的端口，並設置路由器NAT將外網30000端口映射到內網樹莓派的22端口，實現外網非標端口訪問。</p>
+    <p>前一篇關於<a href="passages/2020-04-28-netflix-sni-proxy/">奈飛DNS解鎖的文章</a>中提到，我在執行<code>reboot</code>指令後，家中的樹莓派突然失聯了。這次回家修復後我做了幾個預防措施，避免日後再次發生同樣的事故。</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p>以下操作均是在重裝系統以乾淨的OS進行的。</p>
+<h3 id="1-保持默認ssh端口"><a href="#1-保持默認ssh端口" class="headerlink" title="1. 保持默認ssh端口"></a>1. 保持默認ssh端口</h3><p>為了避免重開機後自定義端口的設置沒有生效，這次我讓ssh保持默認的端口，並設置路由器NAT將外網30000端口映射到內網樹莓派的22端口，實現外網非標端口訪問。</p>
 <h3 id="2-卸載cloud-init"><a href="#2-卸載cloud-init" class="headerlink" title="2. 卸載cloud-init"></a>2. 卸載cloud-init</h3><p>Ubuntu 18.04版本開始用netplan取代<code>/etc/network/interface</code>管理網絡界面，在<code>/etc/netplan/50-cloud-init.yaml</code>有這樣一段話。</p>
 <blockquote>
 <p>This file is generated from information provided by<br>the datasource.  Changes to it will not persist across an instance.<br>To disable cloud-init’s network configuration capabilities, write a file<br>/etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:<br>network: {config: disabled}<br>意思是如果要避免netplan在重開機被洗掉應該調整cloud-init或乾脆卸載它。我上次就是這樣被雷了，這次當然是果斷卸載。這貨具體用途我沒有去查，不過它會讓ubuntu的開機時間增加1分鐘以上，網絡上大部分的教學都推薦直接卸載。</p>
@@ -231,6 +232,14 @@
       </div>
     </aside>
   
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
+     
+      <a href="/tags/netplan/"><i class="fa fa-tags"></i>netplan</a>
+    
+    </div>
   
 </div>
 
