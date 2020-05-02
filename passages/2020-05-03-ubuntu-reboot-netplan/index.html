@@ -203,7 +203,7 @@
 <p>crontab任務</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 * * * * ~&#x2F;scripts&#x2F;ipv6_aaaa.sh &gt;&#x2F;dev&#x2F;null &gt;&#x2F;dev&#x2F;null</span><br></pre></td></tr></table></figure>
 
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>我在Pi上設置有每天早上自動檢查服務器是否被牆並通過Telegram BOT發送結果的腳本，在服務器失聯後腳本依然正常運行，代表Pi還是可以與公網溝通的，只是IPv4的綁定出了問題，我才意識到自動恢復的可行性和運維的重要<del>（突然官腔）</del>。在這次失聯事件後突然體會到VPS的服務價值，至少服務器掛掉後能有人幫你重開機。如果家裡沒有其他能幫你排錯的人（等同無人值守），一定要確保所有開機自啟服務運作正常，能上的保險措施盡量上，畢竟這種情況下家人能幫你做到的運維極限只有拔線重插。</p>
+<h2 id="Conculsion"><a href="#Conculsion" class="headerlink" title="Conculsion"></a>Conculsion</h2><p>我在Pi上設置有每天早上自動檢查服務器是否被牆並通過Telegram BOT發送結果的腳本，在服務器失聯後腳本依然正常運行，代表Pi還是可以與公網溝通的，只是IPv4的綁定出了問題，我才意識到自動恢復的可行性和運維的重要<del>（突然官腔）</del>。在這次失聯事件後突然體會到VPS的服務價值，至少服務器掛掉後能有人幫你重開機。如果家裡沒有其他能幫你排錯的人（等同無人值守），一定要確保所有開機自啟服務運作正常，能上的保險措施盡量上，畢竟這種情況下家人能幫你做到的運維極限只有拔線重插。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://askubuntu.com/questions/1019146/netplan-does-not-apply-at-startup" target="_blank" rel="noopener">Netplan does not apply at startup</a></li>
 <li><a href="https://makandracards.com/operations/42688-how-to-remove-cloud-init-from-ubuntu" target="_blank" rel="noopener">How to remove cloud init from ubuntu</a></li>
@@ -216,7 +216,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Methods"><span class="toc-text">Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-保持默認ssh端口"><span class="toc-text">1. 保持默認ssh端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-卸載cloud-init"><span class="toc-text">2. 卸載cloud-init</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-開機自動重啟netplan"><span class="toc-text">3. 開機自動重啟netplan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IPv6-DDNS"><span class="toc-text">4. IPv6 DDNS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結語"><span class="toc-text">結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Methods"><span class="toc-text">Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-保持默認ssh端口"><span class="toc-text">1. 保持默認ssh端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-卸載cloud-init"><span class="toc-text">2. 卸載cloud-init</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-開機自動重啟netplan"><span class="toc-text">3. 開機自動重啟netplan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IPv6-DDNS"><span class="toc-text">4. IPv6 DDNS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conculsion"><span class="toc-text">Conculsion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
   </div>
 </aside>
   
