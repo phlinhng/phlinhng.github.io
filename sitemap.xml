@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.phlinhng.com/passages/2020-05-12-v2ray-tcp-tls-web/</loc>
+    
+    <lastmod>2020-05-11T19:04:47.864Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.phlinhng.com/passages/2020-04-01-v2ray-caddy-cf-script/</loc>
+    
+    <lastmod>2020-05-11T18:47:23.063Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.phlinhng.com/passages/2020-05-03-ubuntu-reboot-netplan/</loc>
     
     <lastmod>2020-05-02T17:51:21.734Z</lastmod>
@@ -33,13 +47,6 @@
     <loc>http://www.phlinhng.com/passages/2020-03-30-v2ray-server-ram-usage/</loc>
     
     <lastmod>2020-04-09T07:51:23.294Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.phlinhng.com/passages/2020-04-01-v2ray-caddy-cf-script/</loc>
-    
-    <lastmod>2020-04-09T07:51:17.893Z</lastmod>
     
   </url>
   
