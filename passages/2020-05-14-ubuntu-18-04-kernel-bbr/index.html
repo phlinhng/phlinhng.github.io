@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>歸檔: 2020/4 | Paper Hub</title>
+  <title>Ubuntu 18.04升级内核至5.3并开启原版BBR | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="ubuntu,vps,bbr," />
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="Ubuntu 18.04.4版本开始默认采用5.3版内核，若你的VPS提供的Ubuntu 18.04模版还在使用4.15版内核，可以用apt-get升级到新版内核后再开启原版BBR加速。根据测试，原版BBR在5.x内核上的表现大幅贏过BBRPlus@4.14。同时，使用原装内核和原版BBR无论从稳定性和心理安心度来说都比使用第三方内核高出不少。">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,49 +165,81 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">歸檔: 30篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-05-14
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Ubuntu 18.04升级内核至5.3并开启原版BBR
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-04-29</time>
-      <a target="_self" href="/passages/2020-04-28-netflix-sni-proxy/">Netflix DNS流媒體解鎖原理的簡單理解</a>
-    </div>
+  <article class="passage-article">
+    <p>Ubuntu 18.04.4版本开始默认采用5.3版内核，若你的VPS提供的Ubuntu 18.04模版还在使用4.15版内核，可以用<code>apt-get</code>升级到新版内核后再开启原版BBR加速。根据<a href="https://roov.org/2020/03/bbr-bbrplus-bbr2/" target="_blank" rel="noopener">测试</a>，原版BBR在5.x内核上的表现大幅贏过<a href="mailto:BBRPlus@4.14">BBRPlus@4.14</a>。同时，使用原装内核和原版BBR无论从稳定性和心理安心度来说都比使用第三方内核高出不少。</p>
+<h2 id="更换5-3版内核"><a href="#更换5-3版内核" class="headerlink" title="更换5.3版内核"></a>更换5.3版内核</h2><ol>
+<li>检查目前所用的内核版本。若己经是5.x版本，则不需要更换。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure></li>
+<li>安装新版内核<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install --install-recommends linux-generic-hwe-18.04</span><br></pre></td></tr></table></figure></li>
+<li>重启VPS<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="开启原版BBR"><a href="#开启原版BBR" class="headerlink" title="开启原版BBR"></a>开启原版BBR</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">modprobe tcp_bbr</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"tcp_bbr"</span> &gt;&gt; /etc/modules-load.d/modules.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=cake"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#更换5-3版内核"><span class="toc-text">更换5.3版内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启原版BBR"><span class="toc-text">开启原版BBR</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-04-14</time>
-      <a target="_self" href="/passages/2020-04-14-iptables-nat-tutorial/">iptables 中轉流量</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-05-14-ubuntu-18-04-kernel-bbr/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-04-09</time>
-      <a target="_self" href="/passages/2020-04-08-quantumult-surge-subscribe-convertor/">科學上網機場訂閱鏈接轉換API</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/ubuntu/"><i class="fa fa-tags"></i>ubuntu</a>
+     
+      <a href="/tags/vps/"><i class="fa fa-tags"></i>vps</a>
+     
+      <a href="/tags/bbr/"><i class="fa fa-tags"></i>bbr</a>
     
-    <div class="timeline-item">
-      <time>2020-04-03</time>
-      <a target="_self" href="/passages/2020-04-03-cloudflare-china-optmisation/">Cloudflare 三網友好節點 大陸連接優化</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-01</time>
-      <a target="_self" href="/passages/2020-04-01-free-clouflare-warp-plus-data/">免費增加 Cloudflare WARP+ 流量</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-01</time>
-      <a target="_self" href="/passages/2020-04-01-v2ray-caddy-cf-script/">v2Ray四件套(ws+tls+caddy+cdn)纯净一键安装脚本</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -259,16 +291,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2020-05-12-v2ray-tcp-tls-web/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
