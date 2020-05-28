@@ -7,7 +7,7 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>v2Ray TCP+TLS+WEB 一键脚本 2020比WS+TLS更快的最新科学上网方式 | Paper Hub</title>
+  <title>V2Ray TCP+TLS+WEB 一键脚本 2020 比 WS+TLS 更快的最新科学上网方式 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="全网第一个采用Domainsocket的 v2Ray TCP+TLS+WEB 一键脚本。项目地址: https://github.com/phlinhng/v2ray-tcp-tls-web/wiki">
+  <meta name="description" content="全网第一个采用Domainsocket的 V2Ray TCP+TLS+WEB 一键脚本。项目地址: https://github.com/phlinhng/v2ray-tcp-tls-web/wiki">
 
   
 
@@ -179,26 +179,31 @@
     
   </div>
   <h1 class="passage-title">
-    v2Ray TCP+TLS+WEB 一键脚本 2020比WS+TLS更快的最新科学上网方式
+    V2Ray TCP+TLS+WEB 一键脚本 2020 比 WS+TLS 更快的最新科学上网方式
   </h1>
   
   <article class="passage-article">
-    <p>全网第一个采用Domainsocket的 v2Ray TCP+TLS+WEB 一键脚本。<br>项目地址: <a href="https://github.com/phlinhng/v2ray-tcp-tls-web/wiki" target="_blank" rel="noopener">https://github.com/phlinhng/v2ray-tcp-tls-web/wiki</a></p>
+    <p>全网第一个采用Domainsocket的 V2Ray TCP+TLS+WEB 一键脚本。<br>项目地址: <a href="https://github.com/phlinhng/v2ray-tcp-tls-web/wiki" target="_blank" rel="noopener">https://github.com/phlinhng/v2ray-tcp-tls-web/wiki</a></p>
 <p>一开始为了自用写了这个脚本，后来在一个issue的建议下开始了增加功能的不归路。<a href="https://gist.github.com/liberal-boy/f3db4e413a96fa80719db1414f011325" target="_blank" rel="noopener">TCP+TLS+WEB</a>是由WS+TLS+WEB改良的新v2Ray配置组合，拥有比WSS更低的延迟和同样的伪装能力，理论上速度与Trojan-GFW一致。本脚本使用<a href="https://guide.v2fly.org/advanced/tcp_tls_shunt_proxy.html" target="_blank" rel="noopener">TLS分流器</a>进行主要实现、Caddy in Docker做80 http到443 https的重定向，并集成了生成订阅链接、设置电报代理、安装加速内核等功能。</p>
 <h2 id="v2Ray-TCP-TLS-Web-一键脚本"><a href="#v2Ray-TCP-TLS-Web-一键脚本" class="headerlink" title="v2Ray TCP+TLS+Web 一键脚本"></a>v2Ray TCP+TLS+Web 一键脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -sL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;phlinhng&#x2F;v2ray-tcp-tls-web&#x2F;master&#x2F;install.sh) &amp;&amp; v2script</span><br></pre></td></tr></table></figure>
 <h2 id="特色"><a href="#特色" class="headerlink" title="特色"></a>特色</h2><ul>
 <li><strong>全网第一个 TCP+TLS+Web 一键脚本</strong></li>
-<li><strong>默认采用</strong><a href="https://guide.v2fly.org/advanced/tcp_tls_shunt_proxy.html#domain-socket" target="_blank" rel="noopener"><strong>Domain Socket</strong></a><ul>
+<li><strong>默认采用</strong> <a href="https://guide.v2fly.org/advanced/tcp_tls_shunt_proxy.html#domain-socket" target="_blank" rel="noopener"><strong>Domain Socket</strong></a><ul>
 <li>是的，这是一个 v2Ray TCP TLS Web DS 一键脚本</li>
+</ul>
+</li>
+<li><strong>支持的配置 ( 可共存 )</strong><ul>
+<li>TCP+TLS+Web</li>
+<li>WS+TLS+Web+CDN</li>
 </ul>
 </li>
 <li><strong>设置</strong><a href="./电报代理"><strong>电报代理</strong></a></li>
 <li><strong>生成全客户端订阅链接</strong></li>
-<li><strong>集成常用VPS指令</strong>: 开启swap、安装TCP加速内核、测速脚本、卸载阿里云盾</li>
+<li><strong>集成常用 VPS 指令</strong>: 开启 swap、安装 TCP 加速内核、测速脚本、卸载阿里云盾</li>
 </ul>
-<h2 id="功能简介"><a href="#功能简介" class="headerlink" title="功能简介"></a>功能简介</h2><h3 id="v2script"><a href="#v2script" class="headerlink" title="v2script"></a>v2script</h3><p>1) <strong>安装TCP+TLS+WEB</strong>: 就是安装，如果域名解析打错或是想要修改可以執行此行重新生成配置。<br>2) <strong>更新v2Ray-core</strong>: 使用v2Ray官方脚本更新v2Ray-core二进制文件<br>3) <strong>卸载TCP+TLS+WEB</strong>: 完全卸载v2Ray-core, tls-shunt-prxoy, docker containers并删除所有依赖与配置文件。<br>4) <strong>显示vmess链接</strong>: 显示v2rayN格式的vmess链接，适用v2RayNG, Shadowrocket, Pharos Pro<br>5) <strong>订阅管理</strong>: 进入订阅管理工具<br>6) <strong>设置电报代理</strong>: 设置电报代理<br>7) <strong>VPS工具</strong>: 进入VPS工具箱</p>
-<h3 id="v2sub"><a href="#v2sub" class="headerlink" title="v2sub"></a>v2sub</h3><p>1) <strong>生成订阅</strong>: 生成v2rayN格式的订阅链接，托管在v2Ray自身VPS的网站上，您的节点不会被偷<br>2) <strong>更新订阅</strong>: 修改现有订阅链接的名称，也适用于手动修改<code>/etc/v2ray/config.json</code>后更新订阅(只支持读取本脚本所建立的预设格式)<br>3) <strong>显示订阅</strong>: 显示订阅连接 (生成全平台订阅连接需要安装API，若未安装会询问是否要安装API)</p>
-<h3 id="VPS工具箱"><a href="#VPS工具箱" class="headerlink" title="VPS工具箱"></a>VPS工具箱</h3><p>1) <strong>安装加速</strong>: 安装<a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">@chiakge/Linux-NetSpeed</a>提供的四合一加速脚本，感谢加速脚本作者。<br>2) <strong>设置Swap</strong>: 在预设没有开启swap的VPS上开启swap，对增加谷歌云稳定性与让谷歌云不再提示升配置有奇效<br>3) <strong>卸载阿里云盾</strong>: 卸载阿里云安骑士相关组件，仅在阿里云VPS上有效<br>4) <strong>性能测试</strong>: 使用<a href="https://github.com/LemonBench/LemonBench" target="_blank" rel="noopener">@LemonBench/LemonBench</a>提供的测试脚本进行性能测试，感谢测试脚本作者。</p>
+<h2 id="功能简介"><a href="#功能简介" class="headerlink" title="功能简介"></a>功能简介</h2><h3 id="v2script"><a href="#v2script" class="headerlink" title="v2script"></a>v2script</h3><p>1) <strong>安装TCP+TLS+WEB</strong>: 就是安装，如果域名解析打错或是想要修改可以執行此行重新生成配置。<br>2) <strong>显示vmess链接</strong>: 显示 v2rayN 格式的 vmess 链接，适用 v2RayNG, Shadowrocket, Pharos Pro<br>3) <strong>订阅管理</strong>: 进入订阅管理工具<br>4) <strong>设置CDN</strong>: 开启 Cloudflare CDN<br>5) <strong>设置电报代理</strong>: 设置电报代理<br>6) <strong>VPS工具</strong>: 进入 VPS 工具箱<br>7) <strong>更新v2Ray-core</strong>: 使用v2Ray官方脚本更新 v2Ray-core 二进制文件<br>8) <strong>更新tls-shunt-proxy</strong>: 更新 tls-shunt-proxy 二进制文件<br>9) <strong>卸载TCP+TLS+WEB</strong>: 完全卸载 v2Ray-core, tls-shunt-prxoy, docker containers 并删除所有依赖与配置文件。</p>
+<h3 id="v2sub"><a href="#v2sub" class="headerlink" title="v2sub"></a>v2sub</h3><p>1) <strong>生成订阅</strong>: 生成 v2rayN 格式的订阅链接，托管在 v2Ray 自身 VPS 的网站上，您的节点不会被偷<br>2) <strong>更新订阅</strong>: 修改现有订阅链接的名称，也适用于手动修改 <code>/etc/v2ray/config.json</code>后更新订阅 (只支持读取本脚本所建立的预设格式)<br>3) <strong>显示订阅</strong>: 显示订阅连接 (生成全平台订阅连接需要安装 API，若未安装会询问是否要安装 API)</p>
+<h3 id="VPS工具箱"><a href="#VPS工具箱" class="headerlink" title="VPS工具箱"></a>VPS工具箱</h3><p>1) <strong>安装加速</strong>: 安装 <a href="https://github.com/chiakge/Linux-NetSpeed" target="_blank" rel="noopener">@chiakge/Linux-NetSpeed</a> 提供的四合一加速脚本，感谢加速脚本作者。<br>2) <strong>设置Swap</strong>: 在预设没有开启 swap 的 VPS 上开启 swap，对增加谷歌云稳定性与让谷歌云不再提示升配置有奇效<br>3) <strong>卸载阿里云盾</strong>: 卸载阿里云安骑士相关组件，仅在阿里云VPS上有效<br>4) <strong>性能测试</strong>: 使用 <a href="https://github.com/LemonBench/LemonBench" target="_blank" rel="noopener">@LemonBench/LemonBench</a> 提供的测试脚本进行性能测试，感谢测速脚本作者。</p>
 <h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p>博客不常看，有使用上的问题或建议欢迎到Github提<a href="https://github.com/phlinhng/v2ray-tcp-tls-web/issues" target="_blank" rel="noopener">issue</a>。</p>
 <h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
 <li><a href="https://www.v2ray.com/" target="_blank" rel="noopener">Project V</a></li>
