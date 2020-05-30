@@ -8,7 +8,7 @@
     }
 
     const selection = window.getSelection().toString();
-    if(selection.length <= 42) {
+    if(true) {
       return;
     }
 
