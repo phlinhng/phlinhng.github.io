@@ -7,7 +7,7 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>Ubuntu 18.04升级内核至5.3并开启新版BBR | Paper Hub</title>
+  <title>Ubuntu 18.04 升级内核至 5.3 并开启新版 BBR | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="Ubuntu 18.04.4版本开始默认采用5.3版内核，若你的VPS提供的Ubuntu 18.04模版还在使用4.15版内核，可以用apt-get升级到新版内核后再开启原版BBR加速。根据测试，原版BBR在5.x内核上的表现大幅贏过BBRPlus@4.14。同时，使用原装内核和原版BBR无论从稳定性和心理安心度来说都比使用第三方内核高出不少。">
+  <meta name="description" content="Ubuntu 18.04.4 版本开始默认采用 5.3 版内核，若你的 VPS 提供的 Ubuntu 18.04 模版还在使用 4.15 版内核，可以用 apt-get 升级到新版内核后再开启原版 BBR 加速。根据测试，原版 BBR 在 5.x 内核上的表现大幅贏过 BBRPlus@4.14。同时，使用原装内核和原版 BBR 无论从稳定性和心理安心度来说都比使用第三方内核高出不少。">
 
   
 
@@ -179,19 +179,19 @@
     
   </div>
   <h1 class="passage-title">
-    Ubuntu 18.04升级内核至5.3并开启新版BBR
+    Ubuntu 18.04 升级内核至 5.3 并开启新版 BBR
   </h1>
   
   <article class="passage-article">
-    <p>Ubuntu 18.04.4版本开始默认采用5.3版内核，若你的VPS提供的Ubuntu 18.04模版还在使用4.15版内核，可以用<code>apt-get</code>升级到新版内核后再开启原版BBR加速。根据<a href="https://roov.org/2020/03/bbr-bbrplus-bbr2/" target="_blank" rel="noopener">测试</a>，原版BBR在5.x内核上的表现大幅贏过<a href="mailto:BBRPlus@4.14">BBRPlus@4.14</a>。同时，使用原装内核和原版BBR无论从稳定性和心理安心度来说都比使用第三方内核高出不少。</p>
-<h2 id="更换5-3版内核"><a href="#更换5-3版内核" class="headerlink" title="更换5.3版内核"></a>更换5.3版内核</h2><ol>
-<li>检查目前所用的内核版本。若己经是5.x版本，则不需要更换。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure></li>
+    <p>Ubuntu 18.04.4 版本开始默认采用 5.3 版内核，若你的 VPS 提供的 Ubuntu 18.04 模版还在使用 4.15 版内核，可以用 <code>apt-get</code> 升级到新版内核后再开启原版 BBR 加速。根据<a href="https://roov.org/2020/03/bbr-bbrplus-bbr2/" target="_blank" rel="noopener">测试</a>，原版 BBR 在 5.x 内核上的表现大幅贏过 <a href="mailto:BBRPlus@4.14">BBRPlus@4.14</a>。同时，使用原装内核和原版 BBR 无论从稳定性和心理安心度来说都比使用第三方内核高出不少。</p>
+<h2 id="更换-5-3-版内核"><a href="#更换-5-3-版内核" class="headerlink" title="更换 5.3 版内核"></a>更换 5.3 版内核</h2><ol>
+<li>检查目前所用的内核版本。若己经是 5.x 版本，则不需要更换。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure></li>
 <li>安装新版内核<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install --install-recommends linux-generic-hwe-18.04</span><br></pre></td></tr></table></figure></li>
-<li>重启VPS<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<li>重启 VPS<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h2 id="开启原版BBR"><a href="#开启原版BBR" class="headerlink" title="开启原版BBR"></a>开启原版BBR</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">modprobe tcp_bbr</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"tcp_bbr"</span> &gt;&gt; /etc/modules-load.d/modules.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=cake"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+<h2 id="开启原版-BBR"><a href="#开启原版-BBR" class="headerlink" title="开启原版 BBR"></a>开启原版 BBR</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">modprobe tcp_bbr</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"tcp_bbr"</span> &gt;&gt; /etc/modules-load.d/modules.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=cake"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -199,7 +199,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#更换5-3版内核"><span class="toc-text">更换5.3版内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启原版BBR"><span class="toc-text">开启原版BBR</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#更换-5-3-版内核"><span class="toc-text">更换 5.3 版内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启原版-BBR"><span class="toc-text">开启原版 BBR</span></a></li></ol>
   </div>
 </aside>
   
