@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>MTPROTO 電報代理 MTG 免 Docker 安裝教學 | Paper Hub</title>
+  <title>Ubuntu 18.04 安装 LNMP | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="mtproto," />
+    <meta name="keywords" content="linux,nginx,mysql,php," />
   
 
   
-  <meta name="description" content="mtg 是用 go 實現的 mtproto 代理服務端，官方並沒有給出 docker 以外的安裝方式，這就來教大家如何在沒有 docker 的情況下安裝並運行 mtg。">
+  <meta name="description" content="Ubuntu 18.04 安装 LNMP ( Nginx + MySQL + PHP )">
 
   
 
@@ -169,7 +169,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2020-06-11
+      <i class="fa fa-calendar"></i>2020-07-05
     </span>
     
     
@@ -179,19 +179,32 @@
     
   </div>
   <h1 class="passage-title">
-    MTPROTO 電報代理 MTG 免 Docker 安裝教學
+    Ubuntu 18.04 安装 LNMP
   </h1>
   
   <article class="passage-article">
-    <p><a href="https://github.com/9seconds/mtg" target="_blank" rel="noopener">mtg</a> 是用 go 實現的 mtproto 代理服務端，官方並沒有給出 docker 以外的安裝方式，這就來教大家如何在沒有 docker 的情況下安裝並運行 mtg。</p>
-<h2 id="下載最新版本"><a href="#下載最新版本" class="headerlink" title="下載最新版本"></a>下載最新版本</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -nv https://github.com/9seconds/mtg/releases/download/<span class="string">"<span class="variable">$(curl -s "https://api.github.com/repos/9seconds/mtg/releases" | grep '"tag_name":' | head -n 1 | sed -E 's/.*"([^"]+)</span>"</span>.*/\1/<span class="string">')"/mtg-linux-amd64 -O /usr/local/bin/mtg</span></span><br><span class="line"><span class="string">chmod +x /usr/local/bin/mtg</span></span><br></pre></td></tr></table></figure>
+    <p>基本参考<a href="https://blog.anank.ke/w/SSPanel_with_LNMP" target="_blank" rel="noopener">在 Debian 10 上使用最正规的方式搭建 SSPanel 魔改版</a>，并针对 Ubuntu 18.04 做适当调整。</p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install curl wget unzip gnupg2 ca-certificates lsb-release</span><br></pre></td></tr></table></figure>
+<h3 id="设置时区为东八区"><a href="#设置时区为东八区" class="headerlink" title="设置时区为东八区"></a>设置时区为东八区</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl <span class="built_in">set</span>-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
 
-<h2 id="生成-secret"><a href="#生成-secret" class="headerlink" title="生成 secret"></a>生成 secret</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mtg generate-secret tls -c qqmusic.qq.com</span><br></pre></td></tr></table></figure>
-<p>可以填寫任意域名做為偽裝，建議填寫國內的域名。可以參考這個<a href="https://github.com/phlinhng/my-scripts/blob/master/text/mainland_cdn.txt" target="_blank" rel="noopener">列表</a></p>
-<h2 id="編輯-mtg-service"><a href="#編輯-mtg-service" class="headerlink" title="編輯 mtg.service"></a>編輯 mtg.service</h2><p>將上一步的 secret 記下來，保存到 <code>/etc/systemd/system/mtg.service</code> 中。（端口與監聽地址請依實際情形更改）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;MTG - Bullshit-free MTPROTO proxy for Telegram</span><br><span class="line">Documentation&#x3D;https:&#x2F;&#x2F;github.com&#x2F;9seconds&#x2F;mtg</span><br><span class="line">After&#x3D;network.target nss-lookup.target</span><br><span class="line">Wants&#x3D;network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;simple</span><br><span class="line">User&#x3D;root</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;mtg run &lt;secret&gt; --bind 0.0.0.0:8443</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">RestartSec&#x3D;10</span><br><span class="line">RestartPreventExitStatus&#x3D;23</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><h3 id="添加安装源"><a href="#添加安装源" class="headerlink" title="添加安装源"></a>添加安装源</h3><p>使用 <a href="https://deb.sury.org/" target="_blank" rel="noopener">Ondřej Surý</a> 大神的 ubuntu ppa 源。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add-apt-repository ppa:ondrej/nginx-mainline</span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y nginx-extras</span><br></pre></td></tr></table></figure>
 
-<h2 id="啟動服務"><a href="#啟動服務" class="headerlink" title="啟動服務"></a>啟動服務</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mtg</span><br><span class="line">systemctl start mtg</span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+<h2 id="php-7-4"><a href="#php-7-4" class="headerlink" title="php 7.4"></a>php 7.4</h2><h3 id="添加安装源-1"><a href="#添加安装源-1" class="headerlink" title="添加安装源"></a>添加安装源</h3><p>同样使用 <a href="https://deb.sury.org/" target="_blank" rel="noopener">Ondřej Surý</a> 大神的 php ppa 源。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add-apt-repository ppa:ondrej/php</span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h3 id="安装-php-并更新依赖"><a href="#安装-php-并更新依赖" class="headerlink" title="安装 php 并更新依赖"></a>安装 php 并更新依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install -y php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-opcache php7.4-zip php7.4 php7.4-json php7.4-bz2 php7.4-bcmath</span><br><span class="line">apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h2 id="添加安装源并切换版本至-MySQL-8-0"><a href="#添加安装源并切换版本至-MySQL-8-0" class="headerlink" title="添加安装源并切换版本至 MySQL 8.0"></a>添加安装源并切换版本至 MySQL 8.0</h2><p>使用 Percona 分支。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb</span><br><span class="line">dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb</span><br><span class="line">percona-release setup ps80</span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h2 id="安装-Percona-Server"><a href="#安装-Percona-Server" class="headerlink" title="安装 Percona Server"></a>安装 Percona Server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y percona-server-server</span><br></pre></td></tr></table></figure>
+
+<p>至此，LNMP己安装完成。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://blog.anank.ke/w/SSPanel_with_LNMP" target="_blank" rel="noopener">在 Debian 10 上使用最正规的方式搭建 SSPanel 魔改版</a></li>
+<li><a href="https://deb.sury.org/" target="_blank" rel="noopener">deb.sury.org</a></li>
+<li><a href="https://www.percona.com/doc/percona-server/5.7/installation/apt_repo.html" target="_blank" rel="noopener">nstalling Percona Server on Debian and Ubuntu</a></li>
+</ul>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -199,7 +212,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下載最新版本"><span class="toc-text">下載最新版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成-secret"><span class="toc-text">生成 secret</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#編輯-mtg-service"><span class="toc-text">編輯 mtg.service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動服務"><span class="toc-text">啟動服務</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖"><span class="toc-text">安装依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置时区为东八区"><span class="toc-text">设置时区为东八区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx"><span class="toc-text">nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加安装源"><span class="toc-text">添加安装源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-nginx"><span class="toc-text">安装 nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-7-4"><span class="toc-text">php 7.4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加安装源-1"><span class="toc-text">添加安装源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-php-并更新依赖"><span class="toc-text">安装 php 并更新依赖</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加安装源并切换版本至-MySQL-8-0"><span class="toc-text">添加安装源并切换版本至 MySQL 8.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-Percona-Server"><span class="toc-text">安装 Percona Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
@@ -208,7 +221,7 @@
       
         <div>
           原文鏈接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-06-11-mtproto-mtg-service/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-07-05-ubuntu-bionic-lnmp/</a>
         </div>
       
       <div>
@@ -219,7 +232,13 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/mtproto/"><i class="fa fa-tags"></i>mtproto</a>
+      <a href="/tags/linux/"><i class="fa fa-tags"></i>linux</a>
+     
+      <a href="/tags/nginx/"><i class="fa fa-tags"></i>nginx</a>
+     
+      <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
+     
+      <a href="/tags/php/"><i class="fa fa-tags"></i>php</a>
     
     </div>
   
@@ -284,10 +303,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2020-07-05-ubuntu-bionic-lnmp/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-05-31-trojan-go-one-click-automated-script/" data-enable="true">
+    <a href="/passages/2020-06-11-mtproto-mtg-service/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
