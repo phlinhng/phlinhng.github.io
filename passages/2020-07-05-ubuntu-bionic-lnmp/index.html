@@ -195,7 +195,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add-apt-repository ppa:ondrej/php</span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
 <h3 id="安装-php-并更新依赖"><a href="#安装-php-并更新依赖" class="headerlink" title="安装 php 并更新依赖"></a>安装 php 并更新依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install -y php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-opcache php7.4-zip php7.4 php7.4-json php7.4-bz2 php7.4-bcmath</span><br><span class="line">apt upgrade -y</span><br></pre></td></tr></table></figure>
 
-<h2 id="redis-server-php-server"><a href="#redis-server-php-server" class="headerlink" title="redis-server + php-server"></a>redis-server + php-server</h2><p>如果要搭建 v2board，还要安装 redis 与 redis php 扩展。</p>
+<h2 id="redis-server-php-server"><a href="#redis-server-php-server" class="headerlink" title="redis-server + php-server"></a>redis-server + php-server</h2><p>如果要搭建 v2board，还需安装 redis 与 redis php 扩展。</p>
 <h3 id="安装-redis-server"><a href="#安装-redis-server" class="headerlink" title="安装 redis-server"></a>安装 redis-server</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install redis-server</span><br></pre></td></tr></table></figure>
 <h3 id="启动-redis-server"><a href="#启动-redis-server" class="headerlink" title="启动 redis-server"></a>启动 redis-server</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> redis-server</span><br></pre></td></tr></table></figure>
 <h3 id="安装-php-redis-扩展"><a href="#安装-php-redis-扩展" class="headerlink" title="安装 php-redis 扩展"></a>安装 php-redis 扩展</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install php-redis</span><br></pre></td></tr></table></figure>
@@ -208,7 +208,7 @@
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://blog.anank.ke/w/SSPanel_with_LNMP" target="_blank" rel="noopener">在 Debian 10 上使用最正规的方式搭建 SSPanel 魔改版</a></li>
 <li><a href="https://deb.sury.org/" target="_blank" rel="noopener">deb.sury.org</a></li>
-<li><a href="https://www.percona.com/doc/percona-server/5.7/installation/apt_repo.html" target="_blank" rel="noopener">nstalling Percona Server on Debian and Ubuntu</a></li>
+<li><a href="https://www.percona.com/doc/percona-server/5.7/installation/apt_repo.html" target="_blank" rel="noopener">Installing Percona Server on Debian and Ubuntu</a></li>
 </ul>
   </article>
   <aside class="table-content" id="site-toc">
