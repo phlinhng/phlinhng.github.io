@@ -7,7 +7,7 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>歸檔: 2020 | 第3页 | Paper Hub</title>
+  <title>解決 Github pages (github.io) 套 Cloudflare 網站打不開 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="本來給我的博客套 Cloudflare 是想解決 Github.io 在國內有時打不開的問題，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,73 +165,93 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">歸檔: 36篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2020-08-21
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    解決 Github pages (github.io) 套 Cloudflare 網站打不開
+  </h1>
   
+  <article class="passage-article">
+    <p>本來給我的博客套 Cloudflare 是想解決 Github.io 在國內有時打不開的問題，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。</p>
+<p><strong>1. 打開 Enforce HTTPS 後，TLS 證書無法簽發，顯示 Certificate Request Error: Certificate provisioning will retry automatically in a short period, please be patient.</strong>    </p>
+<p>因為 Github 要求 Enforce HTTPS 必須將你的域名直接 CNAME 到 <code>yourid.github.io</code>，添加 A 紀錄到 Github 的服務器、開啟 Cloudflare 的 Proxy 或是 CNAME 接入 Cloudflare Partner 都會導致證書簽發 / 續簽出錯。還有一個坑是，自定義 Domain 為子域名的時候，根域名要沒有紀錄或是同樣 CNAME 到 <code>yourid.github.io</code>，否則也會失敗。    </p>
+<p><strong>2. 避開 Github.io TLS 證書限制</strong><br>但是完全照 Github 的要求把域名 CNAME 到 github.io 的話，我們還套個毛 CDN？所以，建議開啟 HTTPS 的方式如下：    </p>
+<ol>
+<li>取消 Github.io 的 Enforce HTTPS，此時你的站點會暫時是 HTTP 裸奔的狀態</li>
+<li>將 Cloudflare 的 SSL 等級調整為 Flexible，在靈活模式下，Cloudflare 會使用 HTTP 訪問你的源站</li>
+<li>開啟 Cloudflare 的 Force HTTPS    </li>
+<li>開啟 CDN    </li>
+</ol>
+<p>之後 Cloudflare 就會將你的站點應用上他們的 TLS 證書，訪客可以繼續用加密方式訪問你的網站。效果如下</p>
+<blockquote>
+<p>Client —HTTPS— Cloudflare —HTTP— Github.io</p>
+</blockquote>
+<p><strong>3. 調整 Cloudflare 防火牆等級，允許來自特定地區的連線</strong><br>解決 HTTPS 問題後，你可能會發現使用某些梯子還是上不了你的網站。這可能是 Cloudflare 的防火牆將其視為可疑連接而阻檔了，所以可能會發生掛代理打不開，直連卻能連上的奇特現象。可以調整 Cloudflare 防火牆等級讓它不要那麼敏感。步驟：    </p>
+<ol>
+<li>Firewall → Settings → Security Level: Essentially Off</li>
+<li>Firewall → Tools → IP Access Rules: 允許來自 CN, HK, MO, TW, SG, JP, KR, US, DE 的連接 ( 可視情況增加 )</li>
+</ol>
+<p><img src="https://res.cloudinary.com/phlincloud/image/upload/v1582770047/images/2020-08-21-cloudflare-github-io-pages/Screenshot_2020-08-21_at_12.06.36_PM_e64thg.png" alt=""></p>
+<ul>
+<li>Refernces</li>
+<li><ul>
+<li><a href="https://support.github.com/" target="_blank" rel="noopener">GitHub Support</a></li>
+</ul>
+</li>
+<li><ul>
+<li><a href="https://github.community/t/certificate-request-error-is-persistent-tls-certificate-cant-be-provisioned/11008" target="_blank" rel="noopener">Certificate request error is persistent (TLS Certificate can’t be provisioned)</a></li>
+</ul>
+</li>
+</ul>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
     
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-03-20</time>
-      <a target="_self" href="/passages/2020-03-20-serax-google-proxy/">Searx 建立私有搜索引擎站 安全反代Google搜索 保護隱私</a>
-    </div>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-03-17</time>
-      <a target="_self" href="/passages/2020-03-17-caddy-static-file-server/">利用caddy與docker搭建靜態網頁服務器</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2020-08-21-cloudflare-github-io-pages/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-03-14</time>
-      <a target="_self" href="/passages/2020-03-14-bbrplus/">Ubuntu VPS使用加速內核腳本後ssh connection refused的解決辦法</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-03-11</time>
-      <a target="_self" href="/passages/2020-03-11-vmess-ss-trojan-editor/">寫了一個支持 v2Ray, ss, trojan 的訂閱鏈接編輯器</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-03-07</time>
-      <a target="_self" href="/passages/2020-03-07-docker-host-time-sync/">Docker container與宿主機時間同步</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-03-06</time>
-      <a target="_self" href="/passages/2020-03-06-URLSearchParams/">利用URLSearchParams獲取URL Query參數 更新網址</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-28</time>
-      <a target="_self" href="/passages/2020-02-28-wechat-out/">微信隱藏功能 WeChat Out 開啟方法</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-stylus/">利用Stylus插件讓Chrome有macOS般的字體渲染效果</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-first-photo/">找到圖床了</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-02-27</time>
-      <a target="_self" href="/passages/2020-02-27-caddy-cf-cert-renew/">利用Cloudflare API讓Caddy自動續簽SSL證書</a>
-    </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -280,19 +300,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/archives/2020/page/2/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/archives/2020/page/4/" data-enable="true">
+    <a href="/passages/2020-07-05-ubuntu-bionic-lnmp/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
