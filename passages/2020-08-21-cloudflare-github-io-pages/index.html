@@ -7,7 +7,7 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>解決 GitHub pages (github.io) 套 Cloudflare 網站打不開 | Paper Hub</title>
+  <title>解決 GitHub Pages 套 Cloudflare 後網站打不開的問題 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,7 +16,7 @@
   
 
   
-  <meta name="description" content="本來給我的博客套 Cloudflare 是想解決 Github.io 在國內有時打不開的問題，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。">
+  <meta name="description" content="本來給我的博客套 Cloudflare 是想改善 GitHub Pages (github.io) 在國內直連的情況，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。">
 
   
 
@@ -179,11 +179,11 @@
     
   </div>
   <h1 class="passage-title">
-    解決 GitHub pages (github.io) 套 Cloudflare 網站打不開
+    解決 GitHub Pages 套 Cloudflare 後網站打不開的問題
   </h1>
   
   <article class="passage-article">
-    <p>本來給我的博客套 Cloudflare 是想解決 Github.io 在國內有時打不開的問題，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。</p>
+    <p>本來給我的博客套 Cloudflare 是想改善 GitHub Pages (github.io) 在國內直連的情況，結果發現套了問題更多。以下是我為 Github.io + Cloudflare 排錯的心得。</p>
 <p><strong>1. 打開 Enforce HTTPS 後，TLS 證書無法簽發，顯示 Certificate Request Error: Certificate provisioning will retry automatically in a short period, please be patient.</strong>    </p>
 <p>因為 GitHub 要求 Enforce HTTPS 必須將你的域名直接 CNAME 到 <code>yourid.github.io</code>，添加 A 紀錄到 Github 的服務器、開啟 Cloudflare 的 Proxy 或是 CNAME 接入 Cloudflare Partner 都會導致證書簽發 / 續簽出錯。還有一個坑是，自定義 Domain 為子域名的時候，根域名要沒有紀錄或是同樣 CNAME 到 <code>yourid.github.io</code>，否則也會失敗。    </p>
 <p><strong>2. 避開 Github.io TLS 證書限制</strong><br>但是完全照 GitHub 的要求把域名 CNAME 到 github.io 的話，我們還套個毛 CDN？所以，建議開啟 HTTPS 的方式如下：    </p>
