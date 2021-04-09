@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>關於大學社團 | Paper Hub</title>
+  <title>Clash DNS 配置文件 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="碩士,清華大學," />
+    <meta name="keywords" content="科學上網,Clash," />
   
 
   
-  <meta name="description" content="兩年沒玩社團了，最近沒有實習也沒有課，所以今天跑去百團大戰共襄盛舉，只當個潛水小社員應該無所謂吧，廠廠。">
+  <meta name="description" content="今天稍微研究了 Clash 的 DNS 配置文件，做個記錄。">
 
   
 
@@ -169,7 +169,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2021-03-11
+      <i class="fa fa-calendar"></i>2021-04-09
     </span>
     
     
@@ -179,11 +179,28 @@
     
   </div>
   <h1 class="passage-title">
-    關於大學社團
+    Clash DNS 配置文件
   </h1>
   
   <article class="passage-article">
-    <p>兩年沒玩社團了，大學的時候帶過十個營隊、加入過至少五個社團，結果除了載物書院和雄友會以外都沒辦法好好耕耘，最多就混個臉熟，現在想起來真是不勝嘻噓。（應該把時間拿去談戀愛的）<br><br>那時候最可怕的體驗是，你有大把時間卻都不是自己的，每天被無止盡的開會、股聚（功能組/部門在我們學校稱為「股」）還有借器材、報帳等雜事追著跑。到最後別人課業愛情兩豐收，你犧牲了時間和 GPA，結果那些辦活動認識的朋友都不再聯絡，連能一起回憶青春的機會都沒有。社團活動的確可以培養自已的社交能力，但是如果你在社團裡只是重複做著人人都會的雜事，到最後是不會有太多成長的。那些在社團中發光發熱的人，要嘛在高中就是風雲人物，要嘛是長期耕耘找到自已的一片天，要嘛天生就很有才；<strong>不想付出努力，靠重複打工來麻痺自己投入了很多，只是自欺欺人浪費青春而己。</strong><br><br>但是好不容易來到大陸讀研，最近沒有實習也沒有課，如果再不參加社團之後也沒機會了。（人就是那麼犯賤，ㄏㄏ）所以我今天跑去百團大戰共襄盛舉，只當個潛水小社員應該無所謂吧。今天是百團大戰第一天，逛了一圈就填了校史講解隊、海峽兩岸交流協會、區塊鏈協會還有 TUNA 的招新表格。希望在學生生涯的最後一段能找到更多酒友，能順便談個戀愛更好，嘿嘿。<br><br>寫這篇文章只是想提醒自己：<strong>社團投資有賺有賠，加入主幹需謹慎，畢業才是要緊事。</strong></p>
+    <p>今天稍微研究了 Clash 的 DNS 配置文件，做個記錄。</p>
+<h2 id="DNS-配置範例"><a href="#DNS-配置範例" class="headerlink" title="DNS 配置範例"></a>DNS 配置範例</h2><p>懶得看字的可以直接複製這段去用</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dns:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">#listen: 0.0.0.0:53</span></span><br><span class="line">  <span class="attr">ipv6:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line">  <span class="comment"># nameserver 裡 DoH / DoT 的域名使用 default-nameserver 請求</span></span><br><span class="line">  <span class="attr">default-nameserver:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line">  <span class="comment"># 國內域名使用 nameserver 請求</span></span><br><span class="line">  <span class="attr">nameserver:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://doh.pub/dns-query</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://dns.alidns.com/dns-query</span></span><br><span class="line">  <span class="comment"># 國外域名使用 fallback 請求</span></span><br><span class="line">  <span class="attr">fallback:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">tls://1.1.1.1:853</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">tls://1.0.0.1:853</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://1.0.0.1/dns-query</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://1.1.1.1/dns-query</span></span><br><span class="line">    <span class="comment">#- https://cloudflare-dns.com/dns-query #🚫block#</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">tls://dns.google:853</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://dns.google/dns-query</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="nameserver-解說"><a href="#nameserver-解說" class="headerlink" title="nameserver 解說"></a>nameserver 解說</h2><ul>
+<li><code>default-nameserver</code>: 也就是 bootstrap DNS，這裡的 ns 只有一個用途，就是解析 nameserver 裡面用到的域名（DoH / DoT 的域名）。只能填寫 IP。</li>
+<li><code>nameserver</code>: 每當 Clash 收到一個域名，會對 nameserver 和 fallback 中的服務器<strong>並行</strong>發出請求，若 GEOIP 為 CN 的，採用 nameserver 裡面的結果。</li>
+<li><code>fallback</code>: 每當 Clash 收到一個域名，會對 nameserver 和 fallback 中的服務器<strong>並行</strong>發出請求，若 GEOIP 為 CN 以外的，採用 fallback 裡面的結果。</li>
+</ul>
+<h2 id="設置建議"><a href="#設置建議" class="headerlink" title="設置建議"></a>設置建議</h2><ol>
+<li>為防止 DNS 查詢泄露或被劫持，建議在 nameserver 和 fallback 裡面僅使用 DoH 或 DoT（也就是 https:// 和 tls:// 開頭的服務器）。</li>
+<li>nameserver 設置國內服務器，fallback 設置<strong>未被阻斷</strong>的國外服務器，這樣可以達成國內防劫持，國外防污染的效果，兼顧國內網站訪問速度</li>
+<li>若 nameserver 裡沒有國內服務器，在 nameserver 裡的 DNS 全被牆時會上不了網</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://xfox.fun/archives/374/" target="_blank" rel="noopener">Clash 基本配置记录(Fork)</a></li>
+<li><a href="http://blog.joylau.cn/2020/05/01/Clash-Config/" target="_blank" rel="noopener">Clash 基本配置记录</a></li>
+</ul>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -191,7 +208,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS-配置範例"><span class="toc-text">DNS 配置範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nameserver-解說"><span class="toc-text">nameserver 解說</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設置建議"><span class="toc-text">設置建議</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
@@ -200,7 +217,7 @@
       
         <div>
           原文鏈接: 
-          <a href="" target="_blank">http://www.phlinhng.com/passages/2021-03-11-join-club-in-thu-md/</a>
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2021-04-09-clash-dns-module/</a>
         </div>
       
       <div>
@@ -211,9 +228,9 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/%E7%A2%A9%E5%A3%AB/"><i class="fa fa-tags"></i>碩士</a>
+      <a href="/tags/%E7%A7%91%E5%AD%B8%E4%B8%8A%E7%B6%B2/"><i class="fa fa-tags"></i>科學上網</a>
      
-      <a href="/tags/%E6%B8%85%E8%8F%AF%E5%A4%A7%E5%AD%B8/"><i class="fa fa-tags"></i>清華大學</a>
+      <a href="/tags/Clash/"><i class="fa fa-tags"></i>Clash</a>
     
     </div>
   
@@ -278,10 +295,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/2021-04-09-clash-dns-module/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/2020-12-31-taiwan-mainland-china-internet-route/" data-enable="true">
+    <a href="/passages/2021-03-11-join-club-in-thu-md/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
