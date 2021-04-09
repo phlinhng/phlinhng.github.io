@@ -192,6 +192,14 @@
 <li><code>nameserver</code>: 每當 Clash 收到一個域名，會對 nameserver 和 fallback 中的服務器<strong>並行</strong>發出請求，若 GEOIP 為 CN 的，採用 nameserver 裡面的結果。</li>
 <li><code>fallback</code>: 每當 Clash 收到一個域名，會對 nameserver 和 fallback 中的服務器<strong>並行</strong>發出請求，若 GEOIP 為 CN 以外的，採用 fallback 裡面的結果。</li>
 </ul>
+<h2 id="fallback-被牆會造成的結果"><a href="#fallback-被牆會造成的結果" class="headerlink" title="fallback 被牆會造成的結果"></a>fallback 被牆會造成的結果</h2><p>nameserver / fallback 查出的國內/國外 IP，僅用於匹配規則，實際上走代理的域名會使用遠程解析的結果。Fallback 查詢失效會影響的是「GEOIP 結果為國外的直連規則」，舉幾個例子方便說明</p>
+<ul>
+<li>域名: <a href="http://www.google.com，按照域名規則走代理，此時" target="_blank" rel="noopener">www.google.com，按照域名規則走代理，此時</a> Clash 會直接使用遠程解析，不使用 DNS 模塊內的服務器</li>
+<li>域名：edge.microsoft.com，按照域名規則走直連，此時 Clash 會同時向 nameserver 和 fallback 查詢這個域名，並使用 fallback 裡面的結果 → 如果 fallback 被牆，Clash 日誌會連不上這個域名，日誌報錯 <code>all DNS requests failed</code>，</li>
+<li>若是 VPS 入口 IP 在國外，VPS 自身的域名也會使用 fallback 裡的結果 → 如果 fallback 被牆，測速會顯示 Fail，若沒有緩存結果，會連不上 VPS（即使 VPS 是可用的）</li>
+<li>若不介意結果存在被污染的可能，可以不使用 fallback（在有國外域名列表的情況下，只有 Microsoft、iCloud 等國外服務還有 VPS 自身域名會使用 fallback 的結果）；若 fallback 一定要用無污染的 DNS，要確保至少有一台服務器沒被牆</li>
+<li>不建議 fallback 裡面混用國內外的服務器，因為 fallback 是取最快的結果，如果放了國內服務器，基本上國外服務器的結果不會被用到，還不如直接不用 fallback</li>
+</ul>
 <h2 id="設置建議"><a href="#設置建議" class="headerlink" title="設置建議"></a>設置建議</h2><ol>
 <li>為防止 DNS 查詢泄露或被劫持，建議在 nameserver 和 fallback 裡面僅使用 DoH 或 DoT（也就是 https:// 和 tls:// 開頭的服務器）。</li>
 <li>nameserver 設置國內服務器，fallback 設置<strong>未被阻斷</strong>的國外服務器，這樣可以達成國內防劫持，國外防污染的效果，兼顧國內網站訪問速度</li>
@@ -209,7 +217,7 @@
     <span>目錄</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS-配置範例"><span class="toc-text">DNS 配置範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nameserver-解說"><span class="toc-text">nameserver 解說</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設置建議"><span class="toc-text">設置建議</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS-配置範例"><span class="toc-text">DNS 配置範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nameserver-解說"><span class="toc-text">nameserver 解說</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fallback-被牆會造成的結果"><span class="toc-text">fallback 被牆會造成的結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設置建議"><span class="toc-text">設置建議</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
   </div>
 </aside>
   
