@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="yQmYVCzuIkO-w6cPq-lU8GFEEcSDwqHfRmFIB9lTkTg" />
+  <meta name="author" content="phlinhng" />
+  
+  
+  <title>解決 Clash 節點能上測速卻超時的問題 | Paper Hub</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="科學上網,Clash," />
+  
+
+  
+  <meta name="description" content="有時候節點明明是好的，Clash 的測試卻總顯示超時(fail)，難以快速判斷節點可用性，通過兩個修改可以解決測速超時的問題。">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"13vc7SSrDX0ulA5s5njKbRg6-MdYXbMMI","appkey":"BcReDEPMaWVEYun7pVJCCioe","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2020-02-20",
+    passwords: [],
+    is_post: true,
+    lock: false,
+    author: "phlinhng",
+    share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  
+<script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+
+  
+    <link rel="icon" href="/images/cloudy.png">
+    <link rel="apple-touch-icon" href="/images/cloudy.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">PAPER HUB</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 無欲則剛</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首頁</a>
+      
+        <a href="/archives/" target="_self">歸檔</a>
+      
+        <a href="/tags/" target="_self">標籤</a>
+      
+        <a href="/categories/" target="_self">分類</a>
+      
+        <a href="/friends/" target="_self">友鏈</a>
+      
+        <a href="/about/" target="_self">關於</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/phlinhng/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>導航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首頁
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            歸檔
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            標籤
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分類
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友鏈
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            關於
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2021-04-16
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    解決 Clash 節點能上測速卻超時的問題
+  </h1>
+  
+  <article class="passage-article">
+    <h2 id="修改-DNS-解決-80-超時問題"><a href="#修改-DNS-解決-80-超時問題" class="headerlink" title="修改 DNS - 解決 80% 超時問題"></a>修改 DNS - 解決 80% 超時問題</h2><p>如果經常出現全部節點測速失敗，首先要檢查 Clash 的 DNS 配置。許多 Clash 模版會在 fallback 使用海外 DoH / DoT 解析 geoip 非 CN（也就是海外）的域名，直連的 VPS 本身的域名也會用到 fallback 裡面的 DNS 進行解析。由於最近<a href="https://v2ex.com/t/759435" target="_blank" rel="noopener">海外 DoH / DoT 屢遭干擾</a>，經常導致 fallback 解析失敗。將 fallback 地址改成國內可用的 DNS 可解決，為最大可能避免污染，建議使用國內 DoH 或自建 DoH。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dns:</span><br><span class="line">  enable: true</span><br><span class="line">  ipv6: false</span><br><span class="line">  enhanced-mode: fake-ip</span><br><span class="line">  default-nameserver:</span><br><span class="line">    - 119.29.29.29</span><br><span class="line">    - 223.5.5.5</span><br><span class="line">  nameserver:</span><br><span class="line">  # 國內用公開 dns53 就夠了</span><br><span class="line">    - 119.29.29.29</span><br><span class="line">    - 223.5.5.5</span><br><span class="line">    - 114.114.114.114</span><br><span class="line">  fallback:</span><br><span class="line">  # 國外用 doh</span><br><span class="line">    - https:&#x2F;&#x2F;doh.pub&#x2F;dns-query</span><br><span class="line">    - https:&#x2F;&#x2F;dns.alidns.com&#x2F;dns-query</span><br><span class="line">    #- https:&#x2F;&#x2F;xxxx.com&#x2F;dns-query 自建 DoH</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改測速地址-解決-95-超時問題"><a href="#修改測速地址-解決-95-超時問題" class="headerlink" title="修改測速地址 - 解決 95% 超時問題"></a>修改測速地址 - 解決 95% 超時問題</h2><p>修改完 DNS 後，應該大部分節點的測速都正常了，如果還有少數節點測速失敗，可以將測速用的地址從 <code>http://www.gstatic.com/generate_204</code> 改成 <code>http://www.msftconnecttest.com/connecttest.txt</code>。<br><br>改完之後，原本紅色的節點即可正常測速。</p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一般常用來測速的地址 <code>http://www.gstatic.com/generate_204</code>，在有些落地機搭配 Clash 使用的時候，會發生超時，導致 Clash 顯示 fail。我的檢測方法如下 <br></p>
+<ol>
+<li>在落地機上分別運行 <code>dig @8.8.8.8 www.gstatic.com</code> 和 <code>dig @9.9.9.9 www.gstatic.com</code>，發現得到兩個不同的 IP (172.217.160.67 和 216.58.197.163)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u3-Debian &lt;&lt;&gt;&gt; @8.8.8.8 www.gstatic.com</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 47741</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 512</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;www.gstatic.com.		IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">www.gstatic.com.	299	IN	A	172.217.160.67</span><br><span class="line"></span><br><span class="line">;; Query time: 8 msec</span><br><span class="line">;; SERVER: 8.8.8.8#53(8.8.8.8)</span><br><span class="line">;; WHEN: Fri Apr 16 00:39:07 CDT 2021</span><br><span class="line">;; MSG SIZE  rcvd: 60</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u3-Debian &lt;&lt;&gt;&gt; @9.9.9.9 www.gstatic.com</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 9669</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 1232</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;www.gstatic.com.		IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">www.gstatic.com.	262	IN	A	216.58.197.163</span><br><span class="line"></span><br><span class="line">;; Query time: 44 msec</span><br><span class="line">;; SERVER: 9.9.9.9#53(9.9.9.9)</span><br><span class="line">;; WHEN: Fri Apr 16 00:40:07 CDT 2021</span><br><span class="line">;; MSG SIZE  rcvd: 60</span><br></pre></td></tr></table></figure></li>
+<li>運行 <code>curl -v www.gstatic.com/generate_204</code>，發現當使用 <code>172.217.160.67</code> 時，會出現嚴重超時<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* Expire in 0 ms for 6 (transfer 0x56230399afb0)</span><br><span class="line">* Expire in 1 ms for 1 (transfer 0x56230399afb0)</span><br><span class="line">... 略</span><br><span class="line">* Expire in 2 ms for 1 (transfer 0x56230399afb0)</span><br><span class="line">* Expire in 2 ms for 1 (transfer 0x56230399afb0)</span><br><span class="line">* Expire in 2 ms for 1 (transfer 0x56230399afb0)</span><br><span class="line">*   Trying 172.217.160.67...</span><br><span class="line">* TCP_NODELAY set</span><br><span class="line">* Expire in 149996 ms for 3 (transfer 0x56230399afb0)</span><br><span class="line">* Expire in 200 ms for 4 (transfer 0x56230399afb0)</span><br><span class="line">* Connected to www.gstatic.com (172.217.160.67) port 80 (#0)</span><br><span class="line">&gt; GET &#x2F;generate_204 HTTP&#x2F;1.1</span><br><span class="line">&gt; Host: www.gstatic.com</span><br><span class="line">&gt; User-Agent: curl&#x2F;7.64.0</span><br><span class="line">&gt; Accept: *&#x2F;*</span><br><span class="line">&gt;</span><br><span class="line">&lt; HTTP&#x2F;1.1 204 No Content</span><br><span class="line">&lt; Content-Length: 0</span><br><span class="line">&lt; Date: Fri, 16 Apr 2021 05:42:56 GMT</span><br><span class="line">&lt;</span><br><span class="line">* Connection #0 to host www.gstatic.com left intact</span><br></pre></td></tr></table></figure>
+不管試幾次都會刷出 <code>Expire in 149996 ms for 3</code></li>
+<li>若使用另一組 IP 或是其他地址則不會超時<br>
+神奇的是，同樣使用 `www.gstatic.com/generate_204` 測試連接性，Shadowrokcet 卻較少出現測速失敗的 bug，推測是 Clash 的特性。至於發生的原因嘛...
+<blockquote class="imgur-embed-pub" lang="en" data-id="SAc29YM" data-context="false" ><a href="//imgur.com/SAc29YM" target="_blank" rel="noopener"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://v2ex.com/t/759435" target="_blank" rel="noopener">各位使用的 dot 和 doh 还能直连吗? - V2EX</a></li>
+<li><a href="https://www.v2ex.com/t/656983" target="_blank" rel="noopener">检查是否连接到互联网？求一个优雅的思路- V2EX</a></li>
+</ul>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-DNS-解決-80-超時問題"><span class="toc-text">修改 DNS - 解決 80% 超時問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改測速地址-解決-95-超時問題"><span class="toc-text">修改測速地址 - 解決 95% 超時問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2021-04-16-clash-benchmark-timeout-fix-md/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/%E7%A7%91%E5%AD%B8%E4%B8%8A%E7%B6%B2/"><i class="fa fa-tags"></i>科學上網</a>
+     
+      <a href="/tags/Clash/"><i class="fa fa-tags"></i>Clash</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已穩定運行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位訪客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: admin[AT]phlinhng.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <div class="site-layer-input-choose">
+          <a href="javascript:void(0);" title="Change Search Engine">Google</a>
+        </div>
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/2021-04-09-clash-dns-module/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159188335-1"></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159188335-1');
+  </script>
+
+
+
+
+
+
+    
+  </body>
+</html>
