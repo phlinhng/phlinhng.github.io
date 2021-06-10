@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>歸檔: 2020/6 | Paper Hub</title>
+  <title>解决 Redis 服務 Can&#39;t open PID file | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="Linux,v2board," />
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="昨天更新完 v2board 之後發現 redis 服務崩了導致面板進不去，最後修改 redis.service 後解決。">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,19 +165,87 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">歸檔: 43篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2021-06-10
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    解决 Redis 服務 Can't open PID file
+  </h1>
   
+  <article class="passage-article">
+    <h2 id="更新-v2board-至最新-dev-版"><a href="#更新-v2board-至最新-dev-版" class="headerlink" title="更新 v2board 至最新 dev 版"></a>更新 v2board 至最新 dev 版</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all &amp;&amp; git reset --hard origin/dev &amp;&amp; git pull origin dev</span><br><span class="line">php composer.phar update -vvv</span><br><span class="line">php artisan v2board:update</span><br><span class="line">php artisan config:cache</span><br><span class="line">pm2 restart pm2.yaml</span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Redis-service"><a href="#修改-Redis-service" class="headerlink" title="修改 Redis.service"></a>修改 Redis.service</h2><p>若更新後無法進入面版，需要修改 redis.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;redis.service</span><br></pre></td></tr></table></figure>
+<p>在 <code>[Service]</code> 加入 <code>ExecStartPost=/bin/sh -c &quot;echo $MAINPID &gt; /var/run/redis/redis.pid&quot;</code> 傳遞 PID 參數給 redis，即可避免此 bug</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br><span class="line">ExecStop&#x3D;&#x2F;bin&#x2F;kill -s TERM $MAINPID</span><br><span class="line">ExecStartPost&#x3D;&#x2F;bin&#x2F;sh -c &quot;echo $MAINPID &gt; &#x2F;var&#x2F;run&#x2F;redis&#x2F;redis.pid&quot;</span><br><span class="line">PIDFile&#x3D;&#x2F;run&#x2F;redis&#x2F;redis-server.pid</span><br></pre></td></tr></table></figure>
+<p>保存設置重啟</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart redis</span><br></pre></td></tr></table></figure>
+
+<h2 id="v2board-問題排查思路"><a href="#v2board-問題排查思路" class="headerlink" title="v2board 問題排查思路"></a>v2board 問題排查思路</h2><ol>
+<li>v2board 路徑是否設置遞歸 755 權限</li>
+<li><code>php7.x-fpm.service</code>、<code>redis-server.service</code> 是否正常運行</li>
+<li><code>composer</code> 組件是否均正確安裝</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://stackoverflow.com/questions/25515166/redis-daemon-not-creating-a-pid-file" target="_blank" rel="noopener">Redis Daemon not creating a PID file</a></li>
+</ol>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#更新-v2board-至最新-dev-版"><span class="toc-text">更新 v2board 至最新 dev 版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-Redis-service"><span class="toc-text">修改 Redis.service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v2board-問題排查思路"><span class="toc-text">v2board 問題排查思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2021-06-11-solve-redis-service-outage-md/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/Linux/"><i class="fa fa-tags"></i>Linux</a>
+     
+      <a href="/tags/v2board/"><i class="fa fa-tags"></i>v2board</a>
     
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-06-11</time>
-      <a target="_self" href="/passages/2020-06-11-mtproto-mtg-service/">MTPROTO 電報代理 MTG 免 Docker 安裝教學</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -229,16 +297,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/2021-04-16-clash-benchmark-timeout-fix-md/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
