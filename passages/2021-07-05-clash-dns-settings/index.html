@@ -7,16 +7,16 @@
   <meta name="author" content="phlinhng" />
   
   
-  <title>歸檔: 2020 | 第2页 | Paper Hub</title>
+  <title>2021 Clash DNS 抗污染最優配置 | Paper Hub</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="programming, web" />
+    <meta name="keywords" content="科學上網,Clash," />
   
 
   
-  <meta name="description" content="paperhub, aka ph">
+  <meta name="description" content="Clash 的 DNS 怎麼設置最好一直沒有定論。過去不少人會使用海外 DoH / DoT 以對抗污染。由於時過境遷，現在海外 DoH / DoT 在國內已經幾乎不可用，因此需要新的對策。">
 
   
 
@@ -43,7 +43,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2020-02-20",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "phlinhng",
     share: {"twitter":true,"facebook":true,"weibo":false,"qq":true,"wechat":true},
@@ -165,73 +165,75 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">歸檔: 44篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2021-07-05
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    2021 Clash DNS 抗污染最優配置
+  </h1>
   
+  <article class="passage-article">
+    <p>Clash 的 DNS 怎麼設置最好一直沒有定論。過去不少人會使用海外 DoH / DoT 以對抗污染。由於時過境遷，現在海外 DoH / DoT 在國內已經幾乎不可用，因此需要新的對策。<br></p>
+<p>我現在使用的 DNS　配置如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dns:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">ipv6:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line">  <span class="attr">default-nameserver:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line">  <span class="attr">nameserver:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://doh.pub/dns-query</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://dns.alidns.com/dns-query</span></span><br><span class="line">  <span class="attr">fallback:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://101.6.6.6/dns-query</span></span><br></pre></td></tr></table></figure>
+
+<p>由於國內運營商會劫持 UDP53，海外 DoH 又連不上。因此我在國內域名部分使用阿里和騰訊的 DoH，海外域名使用 TUNA 的 DoH 解析。這應該是目前只使用牆內 DNS 的情況下抗污染又兼顧速度的最優配置。</p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目錄</span>
+  </div>
+  <div class="table-content-main">
     
-      <h3 class="timeline-subtitle">2020</h3>
-    
-    <div class="timeline-item">
-      <time>2020-05-12</time>
-      <a target="_self" href="/passages/2020-05-12-v2ray-tcp-tls-web/">V2Ray TCP+TLS+WEB 一键脚本 2020 比 WS+TLS 更快的最新科学上网方式</a>
-    </div>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-05-03</time>
-      <a target="_self" href="/passages/2020-05-03-ubuntu-reboot-netplan/">避免家中的Linux主機在重啟後失去與網絡世界的連結的嘗試</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: phlinhng</div>
+      
+        <div>
+          原文鏈接: 
+          <a href="" target="_blank">http://www.phlinhng.com/passages/2021-07-05-clash-dns-settings/</a>
+        </div>
+      
+      <div>
+        版權聲明: 本博客所有文章除特別聲明外, 均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 許可協議. 轉載請註明出處!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2020-04-29</time>
-      <a target="_self" href="/passages/2020-04-28-netflix-sni-proxy/">Netflix DNS流媒體解鎖原理的簡單理解</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/%E7%A7%91%E5%AD%B8%E4%B8%8A%E7%B6%B2/"><i class="fa fa-tags"></i>科學上網</a>
+     
+      <a href="/tags/Clash/"><i class="fa fa-tags"></i>Clash</a>
     
-    <div class="timeline-item">
-      <time>2020-04-14</time>
-      <a target="_self" href="/passages/2020-04-14-iptables-nat-tutorial/">iptables 中轉流量</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-09</time>
-      <a target="_self" href="/passages/2020-04-08-quantumult-surge-subscribe-convertor/">科學上網機場訂閱鏈接轉換API</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-03</time>
-      <a target="_self" href="/passages/2020-04-03-cloudflare-china-optmisation/">Cloudflare 三網友好節點 大陸連接優化</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-01</time>
-      <a target="_self" href="/passages/2020-04-01-free-clouflare-warp-plus-data/">免費增加 Cloudflare WARP+ 流量</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-04-01</time>
-      <a target="_self" href="/passages/2020-04-01-v2ray-caddy-cf-script/">v2Ray四件套(ws+tls+caddy+cdn)纯净一键安装脚本</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-03-30</time>
-      <a target="_self" href="/passages/2020-03-30-v2ray-server-ram-usage/">不嚴謹的v2Ray服務端內存佔用測試</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2020-03-28</time>
-      <a target="_self" href="/passages/2020-03-28-mstream-google-drive/">mStream + google-drive-ocamlfuse 谷歌雲盤無損音樂串流服務器</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 評論加載中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -280,19 +282,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/archives/2020/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/archives/2020/page/3/" data-enable="true">
+    <a href="/passages/2021-06-11-solve-redis-service-outage-md/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
